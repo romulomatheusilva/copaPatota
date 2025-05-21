@@ -10,6 +10,7 @@
 <body>
   <div class="container">
     <h1>COPA PATOTA - Apostas</h1>
+    
     <label for="apostador">Seu nome:</label>
     <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
 
@@ -114,7 +115,6 @@
       appId: "1:916525284122:web:b03f134cdd375d3436caa3"
     };
 
-    // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -126,7 +126,6 @@
       });
     }
 
-    // Atualizar visual dos votos
     function atualizarVotos() {
       db.ref('votacaoFinal').on('value', (snapshot) => {
         const dados = snapshot.val() || {};
@@ -139,12 +138,21 @@
 
     atualizarVotos();
 
-    // Aposta múltipla
+    // Aposta múltipla com nome do apostador
     document.getElementById("form-multipla").addEventListener("submit", function(e) {
       e.preventDefault();
 
+      const nome = document.getElementById("apostador").value.trim();
+      if (!nome) {
+        alert("Por favor, digite seu nome antes de apostar.");
+        return;
+      }
+
       const formData = new FormData(this);
-      const aposta = {};
+      const aposta = {
+        nome: nome
+      };
+
       formData.forEach((value, key) => {
         aposta[key] = value;
       });
@@ -152,8 +160,9 @@
       const timestamp = Date.now();
       db.ref("apostasMultiplas/" + timestamp).set(aposta);
 
-      document.getElementById("resultado-multipla").innerText = "Aposta registrada!";
+      document.getElementById("resultado-multipla").innerText = `Aposta registrada para ${nome}!`;
       this.reset();
+      document.getElementById("apostador").value = "";
     });
   </script>
 </body>
