@@ -31,7 +31,6 @@
   <div class="container" style="display: none;">
     <h1>COPA PATOTA - Apostas</h1>
    
-    
     <label for="apostador">Seu nome:</label>
     <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
 
@@ -116,24 +115,25 @@
         <button onclick="votarFinal('estressados')">
           <img src="estressados.jpg" alt="Estressados FC Logo" class="team-logo" />Estressados FC
         </button>
-        <button onclick="votarFinal('chupisco')">
-          <img src="chupisco.jpg" alt="Chupisco FC Logo" class="team-logo" />Chupisco FC
+        <button onclick="votarFinal('chupiscos')">
+          <img src="chupiscos.jpg" alt="Chupisco FC Logo" class="team-logo" />Chupisco FC
         </button>
-        <button onclick="votarFinal('monobola')">
-          <img src="monobola.jpg" alt="Monobola RFC Logo" class="team-logo" />Monobola RFC
+        <button onclick="votarFinal('monobolas')">
+          <img src="monobolas.jpg" alt="Monobola RFC Logo" class="team-logo" />Monobola RFC
         </button>
       </div>
       <div class="resultado" id="final-resultado">
         Votos para o campeão: <br />
         CFC: <span id="final-cfc">0</span> |
         Estressados: <span id="final-estressados">0</span> |
-        Chupisco FC: <span id="final-chupisco">0</span> |
-        Monobola RFC: <span id="final-monobola">0</span>
+        Chupiscos: <span id="final-chupiscos">0</span> |
+        Monobolas: <span id="final-monobolas">0</span>
       </div>
       <h2 style="text-align:center;">Gráfico de Votos da Final</h2>
       <canvas id="graficoFinal" width="400" height="400"></canvas>
     </div>
-     <h1>ELENCO</h1>
+
+    <h1>ELENCO</h1>
     <div class="tabela-times">
       <h2>🏆 Tabela de Times Final</h2>
       <table>
@@ -148,43 +148,41 @@
           </tr>
         </thead>
         <tbody>
-    <tr>
-      <td data-label="Time"><strong>CFC</strong></td>
-      <td data-label="Ataque">Nicolau 9</td>
-      <td data-label="Meio">Tururu 10, Felipe 7</td>
-      <td data-label="Defesa">Romulo 14, Arthur 4</td>
-      <td data-label="T">15</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
-    </tr>
-    <tr>
-      <td data-label="Time"><strong>Estressados FC</strong></td>
-      <td data-label="Ataque">Julio 10</td>
-      <td data-label="Meio">Rodriguinho 7, Gilberto 11</td>
-      <td data-label="Defesa">Benjamim 5, Gordo 4</td>
-      <td data-label="T">15</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
-    </tr>
-    <tr>
-      <td data-label="Time"><strong>Chupisco FC</strong></td>
-      <td data-label="Ataque">Rafa 10</td>
-      <td data-label="Meio">Heitor 7, <strong>Marinho</strong> 99</td>
-      <td data-label="Defesa">Henryco 5, Kelvys 11</td>
-      <td data-label="T">15</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
-    </tr>
-    <tr>
-      <td data-label="Time"><strong>Monobola RFC</strong></td>
-      <td data-label="Ataque">Diego 9</td>
-      <td data-label="Meio">Pedro 10, Nicolas 87</td>
-      <td data-label="Defesa">Salsicha 11, Luiz Paulo 3</td>
-      <td data-label="T">14.5</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
-    </tr>
-      </tbody>
-
+          <tr>
+            <td data-label="Time"><strong>CFC</strong></td>
+            <td data-label="Ataque">Nicolau 9</td>
+            <td data-label="Meio">Tururu 10, Felipe 7</td>
+            <td data-label="Defesa">Romulo 14, Arthur 4</td>
+            <td data-label="T">15</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
+          </tr>
+          <tr>
+            <td data-label="Time"><strong>Estressados FC</strong></td>
+            <td data-label="Ataque">Julio 10</td>
+            <td data-label="Meio">Rodriguinho 7, Gilberto 11</td>
+            <td data-label="Defesa">Benjamim 5, Gordo 4</td>
+            <td data-label="T">15</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
+          </tr>
+          <tr>
+            <td data-label="Time"><strong>Chupisco FC</strong></td>
+            <td data-label="Ataque">Rafa 10</td>
+            <td data-label="Meio">Heitor 7, <strong>Marinho</strong> 99</td>
+            <td data-label="Defesa">Henryco 5, Kelvys 11</td>
+            <td data-label="T">15</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
+          </tr>
+          <tr>
+            <td data-label="Time"><strong>Monobola RFC</strong></td>
+            <td data-label="Ataque">Diego 9</td>
+            <td data-label="Meio">Pedro 10, Nicolas 87</td>
+            <td data-label="Defesa">Salsicha 11, Luiz Paulo 3</td>
+            <td data-label="T">14.5</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
+          </tr>
+        </tbody>
       </table>
     </div>
-    
 
     <footer>
       © 2025 COPA PATOTA. Todos os direitos reservados.
@@ -196,169 +194,239 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
-    authDomain: "copapatota.firebaseapp.com",
-    databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
-    projectId: "copapatota",
-    storageBucket: "copapatota.appspot.com",
-    messagingSenderId: "916525284122",
-    appId: "1:916525284122:web:b03f134cdd375d3436caa3"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
+      authDomain: "copapatota.firebaseapp.com",
+      databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
+      projectId: "copapatota",
+      storageBucket: "copapatota.appspot.com",
+      messagingSenderId: "916525284122",
+      appId: "1:916525284122:web:b03f134cdd375d3436caa3"
+    };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const auth = firebase.auth();
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
 
-  // Login com Google
-  window.fazerLoginGoogle = function () {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-      .then(result => {
-        console.log("Login bem-sucedido:", result.user.displayName);
-        document.getElementById("login-container").style.display = "none";
-        document.querySelector(".container").style.display = "block";
-      })
-      .catch(error => {
-        console.error("Erro ao fazer login:", error);
-        alert("Erro ao fazer login: " + error.message);
+    // Controle do login
+    function fazerLoginGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          document.getElementById('login-container').style.display = 'none';
+          document.querySelector('.container').style.display = 'block';
+          carregarDadosFinais();
+          carregarGraficoFinal();
+          carregarDadosMultiplos();
+          carregarGraficosJogos();
+        })
+        .catch(error => {
+          alert("Erro no login: " + error.message);
+        });
+    }
+
+    // Votos para a final
+    function votarFinal(time) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Faça login para votar!");
+        return;
+      }
+      const uid = user.uid;
+      const userName = document.getElementById('apostador').value.trim();
+      if (!userName) {
+        alert('Digite seu nome antes de votar na final.');
+        return;
+      }
+      const votoRef = db.ref('final/' + time);
+      votoRef.transaction(current => (current || 0) + 1);
+
+      // Guardar voto individual para evitar votos múltiplos pode ser implementado aqui
+
+      alert(`Voto registrado para ${time.toUpperCase()}!`);
+      carregarDadosFinais();
+      carregarGraficoFinal();
+    }
+
+    // Atualizar dados finais na tela
+    function carregarDadosFinais() {
+      const times = ['cfc', 'estressados', 'chupiscos', 'monobolas'];
+      times.forEach(time => {
+        db.ref('final/' + time).once('value').then(snapshot => {
+          const votos = snapshot.val() || 0;
+          document.getElementById('final-' + time).textContent = votos;
+        });
       });
-  }
-
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      document.getElementById("login-container").style.display = "none";
-      document.querySelector(".container").style.display = "block";
     }
-  });
 
-  // Gráfico da final
-  const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
-    type: 'pie',
-    data: {
-      labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
-      datasets: [{
-        data: [0, 0, 0, 0],
-        backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#000000']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'bottom' }
-      }
+    // Gráfico dos votos finais
+    let graficoFinal;
+    function carregarGraficoFinal() {
+      const ctx = document.getElementById('graficoFinal').getContext('2d');
+      if (graficoFinal) graficoFinal.destroy();
+
+      db.ref('final').once('value').then(snapshot => {
+        const data = snapshot.val() || {};
+        const votos = {
+          cfc: data.cfc || 0,
+          estressados: data.estressados || 0,
+          chupiscos: data.chupiscos || 0,
+          monobolas: data.monobolas || 0
+        };
+
+        graficoFinal = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['CFC', 'Estressados', 'Chupiscos', 'Monobolas'],
+            datasets: [{
+              label: 'Votos',
+              data: [votos.cfc, votos.estressados, votos.chupiscos, votos.monobolas],
+              backgroundColor: ['#2ecc71', '#e74c3c', '#3498db', '#9b59b6']
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true, stepSize: 1 }
+            }
+          }
+        });
+      });
     }
-  });
 
-  function atualizarGraficoPizza(dados) {
-    graficoPizza.data.datasets[0].data = [
-      dados.cfc || 0,
-      dados.estressados || 0,
-      dados.chupisco || 0,
-      dados.monobola || 0
-    ];
-    graficoPizza.update();
-  }
+    // --- Apostas Múltiplas ---
 
-  function atualizarVotos() {
-    db.ref('votacaoFinal').on('value', snap => {
-      const d = snap.val() || {};
-      document.getElementById("final-cfc").textContent = d.cfc || 0;
-      document.getElementById("final-estressados").textContent = d.estressados || 0;
-      document.getElementById("final-chupisco").textContent = d.chupisco || 0;
-      document.getElementById("final-monobola").textContent = d.monobola || 0;
-      atualizarGraficoPizza(d);
-    });
-  }
+    const jogosMultiplos = {
+      jogo1: ['cfc', 'monobolas'],
+      jogo2: ['chupiscos', 'estressados'],
+      jogo3: ['cfc', 'estressados'],
+      jogo4: ['chupiscos', 'monobolas'],
+      jogo5: ['chupiscos', 'cfc'],
+      jogo6: ['monobolas', 'estressados'],
+    };
 
-  atualizarVotos();
+    function registrarApostaMultipla(event) {
+      event.preventDefault();
 
-  function votarFinal(time) {
-    const user = firebase.auth().currentUser;
-    if (!user) return alert("Você precisa estar logado para votar.");
-
-    const ref = db.ref('usuariosVotaramFinal/' + user.uid);
-    ref.once('value').then(snap => {
-      if (snap.exists()) {
-        alert("Você já votou na final!");
-      } else {
-        ref.set(true);
-        db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
-        alert("Voto registrado!");
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Faça login para apostar!");
+        return;
       }
-    });
-  }
 
-  // Gráficos dos jogos
-  const graficosJogos = {};
-  const nomesJogos = [
-    ['cfc', 'monobolas'],
-    ['chupiscos', 'estressados'],
-    ['cfc', 'estressados'],
-    ['chupiscos', 'monobolas'],
-    ['chupiscos', 'cfc'],
-    ['monobolas', 'estressados']
-  ];
+      const userName = document.getElementById('apostador').value.trim();
+      if (!userName) {
+        alert('Digite seu nome para registrar a aposta múltipla.');
+        return;
+      }
 
-  const coresTimes = {
-    cfc: '#1f2c5c',
-    estressados: '#e74c3c',
-    chupiscos: '#7f8c8d',
-    monobolas: '#000000'
-  };
+      const form = event.target;
+      const aposta = {};
+      for (let i = 1; i <= 6; i++) {
+        const jogoKey = 'jogo' + i;
+        const escolha = form[jogoKey].value;
 
-  nomesJogos.forEach((times, i) => {
-    const idCanvas = grafico-jogo${i + 1};
-    const ctx = document.getElementById(idCanvas).getContext('2d');
-    const jogoKey = jogo${i + 1};
-
-    graficosJogos[jogoKey] = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: times,
-        datasets: [{
-          data: [0, 0],
-          backgroundColor: times.map(t => coresTimes[t])
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: 'bottom' }
+        // Validar que a escolha existe no array de opções do jogo
+        if (!jogosMultiplos[jogoKey].includes(escolha)) {
+          alert(`Escolha inválida para o ${jogoKey}: ${escolha}`);
+          return;
         }
+
+        aposta[jogoKey] = escolha;
       }
-    });
 
-    db.ref('apostasMultiplas').on('value', snap => {
-      const apostas = snap.val() || {};
-      let contagem = { [times[0]]: 0, [times[1]]: 0 };
-      Object.values(apostas).forEach(ap => {
-        if (ap[jogoKey] === times[0]) contagem[times[0]]++;
-        if (ap[jogoKey] === times[1]) contagem[times[1]]++;
+      // Grava no Firebase: apostasMultiplas / [user.uid]
+      db.ref('apostasMultiplas/' + user.uid).set({
+        nome: userName,
+        aposta: aposta,
+        timestamp: Date.now()
+      }).then(() => {
+        document.getElementById('resultado-multipla').textContent = `Aposta múltipla registrada para ${userName}!`;
+        carregarDadosMultiplos();
+        carregarGraficosJogos();
+      }).catch(err => {
+        alert('Erro ao registrar aposta: ' + err.message);
       });
-      graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
-      graficosJogos[jogoKey].update();
-    });
-  });
+    }
 
-  // Formulário múltipla
-  document.getElementById("form-multipla").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const nome = document.getElementById("apostador").value.trim();
-    if (!nome) return alert("Digite seu nome!");
+    document.getElementById('form-multipla').addEventListener('submit', registrarApostaMultipla);
 
-    const formData = new FormData(this);
-    const aposta = { nome };
-    formData.forEach((value, key) => { aposta[key] = value });
+    // Carregar dados múltiplos e mostrar resumo simplificado (sem "undefined")
+    function carregarDadosMultiplos() {
+      const resultadoEl = document.getElementById('resultado-multipla');
+      const apostasRef = db.ref('apostasMultiplas');
 
-    db.ref("apostasMultiplas/" + Date.now()).set(aposta);
-    document.getElementById("resultado-multipla").innerText = Aposta registrada para ${nome}!;
-    this.reset();
-    document.getElementById("apostador").value = "";
-  });
-</script>
+      apostasRef.once('value').then(snapshot => {
+        const data = snapshot.val() || {};
+        if (Object.keys(data).length === 0) {
+          resultadoEl.textContent = "Nenhuma aposta múltipla registrada ainda.";
+          return;
+        }
 
+        // Só mostrar a última aposta registrada
+        const ultimas = Object.values(data).sort((a,b) => b.timestamp - a.timestamp)[0];
+        if (ultimas) {
+          resultadoEl.textContent = `Última aposta registrada para ${ultimas.nome}.`;
+        }
+      });
+    }
 
+    // Gráficos individuais de cada jogo (contagem dos votos)
+    const chartsJogos = {};
 
+    function carregarGraficosJogos() {
+      // Contar votos por time em cada jogo
+      const votosJogos = {
+        jogo1: {cfc: 0, monobolas: 0},
+        jogo2: {chupiscos: 0, estressados: 0},
+        jogo3: {cfc: 0, estressados: 0},
+        jogo4: {chupiscos: 0, monobolas: 0},
+        jogo5: {chupiscos: 0, cfc: 0},
+        jogo6: {monobolas: 0, estressados: 0}
+      };
+
+      db.ref('apostasMultiplas').once('value').then(snapshot => {
+        const apostas = snapshot.val() || {};
+        Object.values(apostas).forEach(aposta => {
+          for (let jogo in aposta.aposta) {
+            const escolha = aposta.aposta[jogo];
+            if (votosJogos[jogo] && votosJogos[jogo][escolha] !== undefined) {
+              votosJogos[jogo][escolha]++;
+            }
+          }
+        });
+
+        // Atualizar gráficos
+        for (let i = 1; i <= 6; i++) {
+          const jogoKey = 'jogo' + i;
+          const ctx = document.getElementById('grafico-' + jogoKey).getContext('2d');
+
+          if (chartsJogos[jogoKey]) chartsJogos[jogoKey].destroy();
+
+          chartsJogos[jogoKey] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: jogosMultiplos[jogoKey].map(time => time.charAt(0).toUpperCase() + time.slice(1)),
+              datasets: [{
+                label: 'Votos',
+                data: jogosMultiplos[jogoKey].map(time => votosJogos[jogoKey][time]),
+                backgroundColor: ['#2ecc71', '#3498db']
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: { beginAtZero: true, stepSize: 1 }
+              },
+              plugins: {
+                legend: { display: false }
+              }
+            }
+          });
+        }
+      });
+    }
+
+  </script>
 </body>
 </html>
