@@ -2,322 +2,158 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>COPA PATOTA - Apostas</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Copa Patota - Apostas</title>
+  <link rel="stylesheet" href="estilos.css" /> <!-- seu CSS externo -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .jogo-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .grafico-jogo {
-      width: 250px;
-      height: 150px;
-    }
-  </style>
 </head>
 <body>
-  <div id="login-container" style="text-align: center; padding: 2rem;">
-    <h2>Bem-vindo à Copa Patota!</h2>
-    <p>Faça login com sua conta Google para votar:</p>
+
+  <div id="login-container" style="text-align:center; margin-top: 3rem;">
     <button onclick="fazerLoginGoogle()">Entrar com Google</button>
   </div>
 
-  <div class="container" style="display: none;">
-    <h1>COPA PATOTA - Apostas</h1>
-   
-    
-    <label for="apostador">Seu nome:</label>
-    <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
+  <div class="container" style="display:none; max-width: 900px; margin: auto; padding: 1rem;">
+    <h1>Copa Patota - Apostas</h1>
 
-    <h2>Vote nos Vencedores dos Jogos</h2>
-    <div class="jogos-multiplos">
-      <h2>Aposta Múltipla: Acertos nos 6 Jogos</h2>
-      <form id="form-multipla">
-        <div id="selecao-jogos-multiplos">
-          <div class="jogo-container">
-            <label>Jogo 1: CFC vs Monobolas
-              <select name="jogo1">
-                <option value="cfc">CFC</option>
-                <option value="monobolas">Monobolas</option>
-              </select>
-            </label>
-            <canvas id="grafico-jogo1" class="grafico-jogo"></canvas>
-          </div>
-
-          <div class="jogo-container">
-            <label>Jogo 2: Chupiscos vs Estressados
-              <select name="jogo2">
-                <option value="chupiscos">Chupiscos</option>
-                <option value="estressados">Estressados</option>
-              </select>
-            </label>
-            <canvas id="grafico-jogo2" class="grafico-jogo"></canvas>
-          </div>
-
-          <div class="jogo-container">
-            <label>Jogo 3: CFC vs Estressados
-              <select name="jogo3">
-                <option value="cfc">CFC</option>
-                <option value="estressados">Estressados</option>
-              </select>
-            </label>
-            <canvas id="grafico-jogo3" class="grafico-jogo"></canvas>
-          </div>
-
-          <div class="jogo-container">
-            <label>Jogo 4: Chupiscos vs Monobolas
-              <select name="jogo4">
-                <option value="chupiscos">Chupiscos</option>
-                <option value="monobolas">Monobolas</option>
-              </select>
-            </label>
-            <canvas id="grafico-jogo4" class="grafico-jogo"></canvas>
-          </div>
-
-          <div class="jogo-container">
-            <label>Jogo 5: Chupiscos vs CFC
-              <select name="jogo5">
-                <option value="chupiscos">Chupiscos</option>
-                <option value="cfc">CFC</option>
-              </select>
-            </label>
-            <canvas id="grafico-jogo5" class="grafico-jogo"></canvas>
-          </div>
-
-          <div class="jogo-container">
-            <label>Jogo 6: Monobolas vs Estressados
-              <select name="jogo6">
-                <option value="monobolas">Monobolas</option>
-                <option value="estressados">Estressados</option>
-              </select>
-            </label>
-            <canvas id="grafico-jogo6" class="grafico-jogo"></canvas>
-          </div>
-        </div>
-        <button type="submit" style="margin-top: 10px;">Confirmar Aposta Múltipla</button>
-      </form>
-      <div class="resultado" id="resultado-multipla">
-        Nenhuma aposta múltipla registrada ainda.
-      </div>
-    </div>
-
-    <div class="final">
-      <h2>Quem será o Campeão da Final?</h2>
-      <div class="jogo">
-        <button onclick="votarFinal('cfc')">
-          <img src="cabaco.jpg" alt="CFC Logo" class="team-logo" />CFC
-        </button>
-        <button onclick="votarFinal('estressados')">
-          <img src="estressados.jpg" alt="Estressados FC Logo" class="team-logo" />Estressados FC
-        </button>
-        <button onclick="votarFinal('chupisco')">
-          <img src="chupisco.jpg" alt="Chupisco FC Logo" class="team-logo" />Chupisco FC
-        </button>
-        <button onclick="votarFinal('monobola')">
-          <img src="monobola.jpg" alt="Monobola RFC Logo" class="team-logo" />Monobola RFC
-        </button>
-      </div>
-      <div class="resultado" id="final-resultado">
-        Votos para o campeão: <br />
+    <section>
+      <h2>Votação Final</h2>
+      <p>
+        <button onclick="votarFinal('cfc')">Votar CFC</button>
+        <button onclick="votarFinal('estressados')">Votar Estressados</button>
+        <button onclick="votarFinal('chupisco')">Votar Chupisco FC</button>
+        <button onclick="votarFinal('monobola')">Votar Monobola RFC</button>
+      </p>
+      <p>
         CFC: <span id="final-cfc">0</span> |
         Estressados: <span id="final-estressados">0</span> |
         Chupisco FC: <span id="final-chupisco">0</span> |
         Monobola RFC: <span id="final-monobola">0</span>
-      </div>
-      <h2 style="text-align:center;">Gráfico de Votos da Final</h2>
-      <canvas id="graficoFinal" width="400" height="400"></canvas>
-    </div>
-     <h1>ELENCO</h1>
-    <div class="tabela-times">
-      <h2>🏆 Tabela de Times Final</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Ataque</th>
-            <th>Meio</th>
-            <th>Defesa</th>
-            <th>T</th>
-            <th>Faltam</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>CFC</strong></td>
-            <td>Nicolau 9</td>
-            <td>Tururu 10, Felipe 7</td>
-            <td>Romulo 14, Arthur 4</td>
-            <td>15</td>
-            <td><span class="status-completo">✅ Completo</span></td>
-          </tr>
-          <tr>
-            <td><strong>Estressados FC</strong></td>
-            <td>Julio 10</td>
-            <td>Rodriguinho 7, Gilberto 11</td>
-            <td>Benjamim 5, Gordo 4</td>
-            <td>15</td>
-            <td><span class="status-completo">✅ Completo</span></td>
-          </tr>
-          <tr>
-            <td><strong>Chupisco FC</strong></td>
-            <td>Rafa 10</td>
-            <td>Heitor 7, <strong>Marinho</strong> 99</td>
-            <td>Henryco 5, Kelvys 11</td>
-            <td>15</td>
-            <td><span class="status-completo">✅ Completo</span></td>
-          </tr>
-          <tr>
-            <td><strong>Monobola RFC</strong></td>
-            <td>Diego 9</td>
-            <td>Pedro 10, Nicolas 87</td>
-            <td>Salsicha 11, Luiz Paulo 3</td>
-            <td>14.5</td>
-            <td><span class="status-completo">✅ Completo</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
+      </p>
+      <canvas id="graficoFinal" style="max-width:400px;"></canvas>
+    </section>
 
-    <footer>
-      © 2025 COPA PATOTA. Todos os direitos reservados.
-    </footer>
+    <hr/>
+
+    <section>
+      <h2>Apostas Múltiplas</h2>
+      <form id="form-multipla">
+        <label>Nome: <input type="text" id="apostador" required /></label><br/><br/>
+        
+        <label>Jogo 1 (CFC x Monobolas):</label><br/>
+        <input type="radio" name="jogo1" value="cfc" required /> CFC
+        <input type="radio" name="jogo1" value="monobolas" /> Monobolas
+        <br/><br/>
+
+        <label>Jogo 2 (Chupiscos x Estressados):</label><br/>
+        <input type="radio" name="jogo2" value="chupiscos" required /> Chupiscos
+        <input type="radio" name="jogo2" value="estressados" /> Estressados
+        <br/><br/>
+
+        <label>Jogo 3 (CFC x Estressados):</label><br/>
+        <input type="radio" name="jogo3" value="cfc" required /> CFC
+        <input type="radio" name="jogo3" value="estressados" /> Estressados
+        <br/><br/>
+
+        <label>Jogo 4 (Chupiscos x Monobolas):</label><br/>
+        <input type="radio" name="jogo4" value="chupiscos" required /> Chupiscos
+        <input type="radio" name="jogo4" value="monobolas" /> Monobolas
+        <br/><br/>
+
+        <label>Jogo 5 (Chupiscos x CFC):</label><br/>
+        <input type="radio" name="jogo5" value="chupiscos" required /> Chupiscos
+        <input type="radio" name="jogo5" value="cfc" /> CFC
+        <br/><br/>
+
+        <label>Jogo 6 (Monobolas x Estressados):</label><br/>
+        <input type="radio" name="jogo6" value="monobolas" required /> Monobolas
+        <input type="radio" name="jogo6" value="estressados" /> Estressados
+        <br/><br/>
+
+        <button type="submit">Enviar Aposta</button>
+      </form>
+
+      <div id="resultado-multipla" style="margin-top:1rem; font-weight:bold;"></div>
+
+      <h3>Gráficos das Apostas Múltiplas</h3>
+
+      <div style="display:flex; flex-wrap: wrap; gap: 2rem;">
+        <div>
+          <p>Jogo 1: CFC x Monobolas</p>
+          <canvas id="grafico-jogo1" style="max-width:250px;"></canvas>
+        </div>
+        <div>
+          <p>Jogo 2: Chupiscos x Estressados</p>
+          <canvas id="grafico-jogo2" style="max-width:250px;"></canvas>
+        </div>
+        <div>
+          <p>Jogo 3: CFC x Estressados</p>
+          <canvas id="grafico-jogo3" style="max-width:250px;"></canvas>
+        </div>
+        <div>
+          <p>Jogo 4: Chupiscos x Monobolas</p>
+          <canvas id="grafico-jogo4" style="max-width:250px;"></canvas>
+        </div>
+        <div>
+          <p>Jogo 5: Chupiscos x CFC</p>
+          <canvas id="grafico-jogo5" style="max-width:250px;"></canvas>
+        </div>
+        <div>
+          <p>Jogo 6: Monobolas x Estressados</p>
+          <canvas id="grafico-jogo6" style="max-width:250px;"></canvas>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
-    authDomain: "copapatota.firebaseapp.com",
-    databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
-    projectId: "copapatota",
-    storageBucket: "copapatota.appspot.com",
-    messagingSenderId: "916525284122",
-    appId: "1:916525284122:web:b03f134cdd375d3436caa3"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
+      authDomain: "copapatota.firebaseapp.com",
+      databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
+      projectId: "copapatota",
+      storageBucket: "copapatota.appspot.com",
+      messagingSenderId: "916525284122",
+      appId: "1:916525284122:web:b03f134cdd375d3436caa3"
+    };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const auth = firebase.auth();
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
 
-  // Login com Google
-  window.fazerLoginGoogle = function () {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-      .then(result => {
-        console.log("Login bem-sucedido:", result.user.displayName);
+    window.fazerLoginGoogle = function () {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          console.log("Login bem-sucedido:", result.user.displayName);
+          document.getElementById("login-container").style.display = "none";
+          document.querySelector(".container").style.display = "block";
+        })
+        .catch(error => {
+          console.error("Erro ao fazer login:", error);
+          alert("Erro ao fazer login: " + error.message);
+        });
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
         document.getElementById("login-container").style.display = "none";
         document.querySelector(".container").style.display = "block";
-      })
-      .catch(error => {
-        console.error("Erro ao fazer login:", error);
-        alert("Erro ao fazer login: " + error.message);
-      });
-  }
-
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      document.getElementById("login-container").style.display = "none";
-      document.querySelector(".container").style.display = "block";
-    }
-  });
-
-  // Gráfico da final
-  const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
-    type: 'pie',
-    data: {
-      labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
-      datasets: [{
-        data: [0, 0, 0, 0],
-        backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#000000']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'bottom' }
-      }
-    }
-  });
-
-  function atualizarGraficoPizza(dados) {
-    graficoPizza.data.datasets[0].data = [
-      dados.cfc || 0,
-      dados.estressados || 0,
-      dados.chupisco || 0,
-      dados.monobola || 0
-    ];
-    graficoPizza.update();
-  }
-
-  function atualizarVotos() {
-    db.ref('votacaoFinal').on('value', snap => {
-      const d = snap.val() || {};
-      document.getElementById("final-cfc").textContent = d.cfc || 0;
-      document.getElementById("final-estressados").textContent = d.estressados || 0;
-      document.getElementById("final-chupisco").textContent = d.chupisco || 0;
-      document.getElementById("final-monobola").textContent = d.monobola || 0;
-      atualizarGraficoPizza(d);
-    });
-  }
-
-  atualizarVotos();
-
-  function votarFinal(time) {
-    const user = firebase.auth().currentUser;
-    if (!user) return alert("Você precisa estar logado para votar.");
-
-    const ref = db.ref('usuariosVotaramFinal/' + user.uid);
-    ref.once('value').then(snap => {
-      if (snap.exists()) {
-        alert("Você já votou na final!");
-      } else {
-        ref.set(true);
-        db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
-        alert("Voto registrado!");
       }
     });
-  }
 
-  // Gráficos dos jogos
-  const graficosJogos = {};
-  const nomesJogos = [
-    ['cfc', 'monobolas'],
-    ['chupiscos', 'estressados'],
-    ['cfc', 'estressados'],
-    ['chupiscos', 'monobolas'],
-    ['chupiscos', 'cfc'],
-    ['monobolas', 'estressados']
-  ];
-
-  const coresTimes = {
-    cfc: '#1f2c5c',
-    estressados: '#e74c3c',
-    chupiscos: '#7f8c8d',
-    monobolas: '#000000'
-  };
-
-  nomesJogos.forEach((times, i) => {
-    const idCanvas = grafico-jogo${i + 1};
-    const ctx = document.getElementById(idCanvas).getContext('2d');
-    const jogoKey = jogo${i + 1};
-
-    graficosJogos[jogoKey] = new Chart(ctx, {
+    // Gráfico da final
+    const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
       type: 'pie',
       data: {
-        labels: times,
+        labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
         datasets: [{
-          data: [0, 0],
-          backgroundColor: times.map(t => coresTimes[t])
+          data: [0, 0, 0, 0],
+          backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#000000']
         }]
       },
       options: {
@@ -328,36 +164,112 @@
       }
     });
 
-    db.ref('apostasMultiplas').on('value', snap => {
-      const apostas = snap.val() || {};
-      let contagem = { [times[0]]: 0, [times[1]]: 0 };
-      Object.values(apostas).forEach(ap => {
-        if (ap[jogoKey] === times[0]) contagem[times[0]]++;
-        if (ap[jogoKey] === times[1]) contagem[times[1]]++;
+    function atualizarGraficoPizza(dados) {
+      graficoPizza.data.datasets[0].data = [
+        dados.cfc || 0,
+        dados.estressados || 0,
+        dados.chupisco || 0,
+        dados.monobola || 0
+      ];
+      graficoPizza.update();
+    }
+
+    function atualizarVotos() {
+      db.ref('votacaoFinal').on('value', snap => {
+        const d = snap.val() || {};
+        document.getElementById("final-cfc").textContent = d.cfc || 0;
+        document.getElementById("final-estressados").textContent = d.estressados || 0;
+        document.getElementById("final-chupisco").textContent = d.chupisco || 0;
+        document.getElementById("final-monobola").textContent = d.monobola || 0;
+        atualizarGraficoPizza(d);
       });
-      graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
-      graficosJogos[jogoKey].update();
+    }
+
+    atualizarVotos();
+
+    function votarFinal(time) {
+      const user = firebase.auth().currentUser;
+      if (!user) return alert("Você precisa estar logado para votar.");
+
+      const ref = db.ref('usuariosVotaramFinal/' + user.uid);
+      ref.once('value').then(snap => {
+        if (snap.exists()) {
+          alert("Você já votou na final!");
+        } else {
+          ref.set(true);
+          db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
+          alert("Voto registrado!");
+        }
+      });
+    }
+
+    // Gráficos dos jogos
+    const graficosJogos = {};
+    const nomesJogos = [
+      ['cfc', 'monobolas'],
+      ['chupiscos', 'estressados'],
+      ['cfc', 'estressados'],
+      ['chupiscos', 'monobolas'],
+      ['chupiscos', 'cfc'],
+      ['monobolas', 'estressados']
+    ];
+
+    const coresTimes = {
+      cfc: '#1f2c5c',
+      estressados: '#e74c3c',
+      chupiscos: '#7f8c8d',
+      monobolas: '#000000'
+    };
+
+    nomesJogos.forEach((times, i) => {
+      const idCanvas = `grafico-jogo${i + 1}`;
+      const ctx = document.getElementById(idCanvas).getContext('2d');
+      const jogoKey = `jogo${i + 1}`;
+
+      graficosJogos[jogoKey] = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: times,
+          datasets: [{
+            data: [0, 0],
+            backgroundColor: times.map(t => coresTimes[t])
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+
+      db.ref('apostasMultiplas').on('value', snap => {
+        const apostas = snap.val() || {};
+        let contagem = { [times[0]]: 0, [times[1]]: 0 };
+        Object.values(apostas).forEach(ap => {
+          if (ap[jogoKey] === times[0]) contagem[times[0]]++;
+          if (ap[jogoKey] === times[1]) contagem[times[1]]++;
+        });
+        graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
+        graficosJogos[jogoKey].update();
+      });
     });
-  });
 
-  // Formulário múltipla
-  document.getElementById("form-multipla").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const nome = document.getElementById("apostador").value.trim();
-    if (!nome) return alert("Digite seu nome!");
+    // Formulário múltipla
+    document.getElementById("form-multipla").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nome = document.getElementById("apostador").value.trim();
+      if (!nome) return alert("Digite seu nome!");
 
-    const formData = new FormData(this);
-    const aposta = { nome };
-    formData.forEach((value, key) => { aposta[key] = value });
+      const formData = new FormData(this);
+      const aposta = { nome };
+      formData.forEach((value, key) => { aposta[key] = value });
 
-    db.ref("apostasMultiplas/" + Date.now()).set(aposta);
-    document.getElementById("resultado-multipla").innerText = Aposta registrada para ${nome}!;
-    this.reset();
-    document.getElementById("apostador").value = "";
-  });
-</script>
-
-
-
+      db.ref("apostasMultiplas/" + Date.now()).set(aposta);
+      document.getElementById("resultado-multipla").innerText = `Aposta registrada para ${nome}!`;
+      this.reset();
+      document.getElementById("apostador").value = "";
+    });
+  </script>
 </body>
 </html>
