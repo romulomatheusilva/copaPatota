@@ -530,4 +530,61 @@ footer {
     color: #2ecc71;
   }
 }
+/* Estilo base dos labels dos jogos (botões) */
+.jogo label {
+  flex: 1 1 calc(50% - 0.75rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  user-select: none;
+  color: #fff; /* padrão texto branco */
+  border: 2px solid transparent; /* borda padrão transparente */
+}
+
+/* CFC - azul escuro */
+.jogo label.cfc {
+  background-color: #0B2345;
+  color: #ecf0f1;
+  border-color: #144A77;
+}
+.jogo label.cfc:hover {
+  background-color: #144A77;
+}
+
+/* Chupisco - cinza */
+.jogo label.chupisco {
+  background-color: #7D7D7D;
+  color: #fff;
+  border-color: #B0B0B0;
+}
+.jogo label.chupisco:hover {
+  background-color: #B0B0B0;
+  color: #1b1f23;
+}
+
+/* Monobolas - preto */
+.jogo label.monobolas {
+  background-color: #000000;
+  color: #fff;
+  border-color: #333333;
+}
+.jogo label.monobolas:hover {
+  background-color: #333333;
+}
+
+/* Estressados - amarelo */
+.jogo label.estressados {
+  background-color: #FFD700;
+  color: #1b1f23;
+  border-color: #FFC700;
+}
+.jogo label.estressados:hover {
+  background-color: #FFC700;
+}
 
