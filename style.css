@@ -212,5 +212,64 @@ body {
       height: 28px;
     }
   }
+.jogos-multiplos {
+  background-color: #2c3338;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.jogos-multiplos h2 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+#selecao-jogos-multiplos label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1e2429;
+  color: #ffffff;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+#selecao-jogos-multiplos select {
+  background-color: #111417;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+#form-multipla button {
+  background-color: #2ecc71;
+  color: #000000;
+  font-weight: bold;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#form-multipla button:hover {
+  background-color: #27ae60;
+}
+
+.resultado {
+  margin-top: 15px;
+  background-color: #1e2a33;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
   
   
