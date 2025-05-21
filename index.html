@@ -6,6 +6,7 @@
   <title>COPA PATOTA - Apostas</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
@@ -92,6 +93,8 @@
         Chupisco FC: <span id="final-chupisco">0</span> |
         Monobola RFC: <span id="final-monobola">0</span>
       </div>
+      <h2 style="text-align:center;">Gráfico de Votos da Final</h2>
+      <canvas id="graficoFinal" width="400" height="400"></canvas>
     </div>
 
     <footer>
@@ -118,6 +121,39 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // Gráfico de pizza
+    const ctx = document.getElementById('graficoFinal').getContext('2d');
+    const graficoPizza = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
+        datasets: [{
+          label: 'Votos',
+          data: [0, 0, 0, 0],
+          backgroundColor: ['#2ecc71', '#3498db', '#f1c40f', '#e67e22'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    function atualizarGraficoPizza(dados) {
+      graficoPizza.data.datasets[0].data = [
+        dados.cfc || 0,
+        dados.estressados || 0,
+        dados.chupisco || 0,
+        dados.monobola || 0
+      ];
+      graficoPizza.update();
+    }
+
     // Votação da final
     function votarFinal(time) {
       const votosRef = db.ref('votacaoFinal/' + time);
@@ -133,6 +169,8 @@
         document.getElementById("final-estressados").textContent = dados.estressados || 0;
         document.getElementById("final-chupisco").textContent = dados.chupisco || 0;
         document.getElementById("final-monobola").textContent = dados.monobola || 0;
+
+        atualizarGraficoPizza(dados);
       });
     }
 
@@ -149,9 +187,7 @@
       }
 
       const formData = new FormData(this);
-      const aposta = {
-        nome: nome
-      };
+      const aposta = { nome: nome };
 
       formData.forEach((value, key) => {
         aposta[key] = value;
