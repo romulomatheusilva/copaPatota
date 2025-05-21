@@ -143,148 +143,152 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
-      authDomain: "copapatota.firebaseapp.com",
-      databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
-      projectId: "copapatota",
-      storageBucket: "copapatota.appspot.com",
-      messagingSenderId: "916525284122",
-      appId: "1:916525284122:web:b03f134cdd375d3436caa3"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const auth = firebase.auth();
+  const firebaseConfig = {
+    apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
+    authDomain: "copapatota.firebaseapp.com",
+    databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
+    projectId: "copapatota",
+    storageBucket: "copapatota.appspot.com",
+    messagingSenderId: "916525284122",
+    appId: "1:916525284122:web:b03f134cdd375d3436caa3"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
 
-    function fazerLoginGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then(result => {
+  // ✅ Agora é global
+  window.fazerLoginGoogle = function () {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then(result => {
         console.log("Login bem-sucedido:", result.user.displayName);
         document.getElementById("login-container").style.display = "none";
         document.querySelector(".container").style.display = "block";
       })
-    .catch(error => {
-      console.error("Erro ao fazer login:", error);
-      alert("Erro ao fazer login: " + error.message);
+      .catch(error => {
+        console.error("Erro ao fazer login:", error);
+        alert("Erro ao fazer login: " + error.message);
       });
-}
+  }
 
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById("login-container").style.display = "none";
+      document.querySelector(".container").style.display = "block";
+    }
+  });
 
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        document.getElementById("login-container").style.display = "none";
-        document.querySelector(".container").style.display = "block";
+  const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
+    type: 'pie',
+    data: {
+      labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
+      datasets: [{
+        data: [0, 0, 0, 0],
+        backgroundColor: ['#2ecc71', '#3498db', '#f1c40f', '#e67e22']
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+  });
+
+  function atualizarGraficoPizza(dados) {
+    graficoPizza.data.datasets[0].data = [
+      dados.cfc || 0,
+      dados.estressados || 0,
+      dados.chupisco || 0,
+      dados.monobola || 0
+    ];
+    graficoPizza.update();
+  }
+
+  function atualizarVotos() {
+    db.ref('votacaoFinal').on('value', snap => {
+      const d = snap.val() || {};
+      document.getElementById("final-cfc").textContent = d.cfc || 0;
+      document.getElementById("final-estressados").textContent = d.estressados || 0;
+      document.getElementById("final-chupisco").textContent = d.chupisco || 0;
+      document.getElementById("final-monobola").textContent = d.monobola || 0;
+      atualizarGraficoPizza(d);
+    });
+  }
+
+  atualizarVotos();
+
+  function votarFinal(time) {
+    const user = firebase.auth().currentUser;
+    if (!user) return alert("Você precisa estar logado para votar.");
+
+    const ref = db.ref('usuariosVotaramFinal/' + user.uid);
+    ref.once('value').then(snap => {
+      if (snap.exists()) {
+        alert("Você já votou na final!");
+      } else {
+        ref.set(true);
+        db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
+        alert("Voto registrado!");
+      }
+    });
+  }
+
+  const graficosJogos = {};
+  const nomesJogos = [
+    ['cfc', 'monobolas'],
+    ['chupiscos', 'estressados'],
+    ['cfc', 'estressados'],
+    ['chupiscos', 'monobolas'],
+    ['chupiscos', 'cfc'],
+    ['monobolas', 'estressados']
+  ];
+
+  nomesJogos.forEach((times, i) => {
+    const idCanvas = `grafico-jogo${i + 1}`;
+    const ctx = document.getElementById(idCanvas).getContext('2d');
+    const jogoKey = `jogo${i + 1}`;
+
+    graficosJogos[jogoKey] = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: times,
+        datasets: [{
+          data: [0, 0],
+          backgroundColor: ['#2ecc71', '#e67e22']
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        },
+        plugins: { legend: { display: false } }
       }
     });
 
-    const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
-      type: 'pie',
-      data: {
-        labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
-        datasets: [{
-          data: [0, 0, 0, 0],
-          backgroundColor: ['#2ecc71', '#3498db', '#f1c40f', '#e67e22']
-        }]
-      },
-      options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    db.ref('apostasMultiplas').on('value', snap => {
+      const apostas = snap.val() || {};
+      let contagem = { [times[0]]: 0, [times[1]]: 0 };
+      Object.values(apostas).forEach(ap => {
+        if (ap[jogoKey] === times[0]) contagem[times[0]]++;
+        if (ap[jogoKey] === times[1]) contagem[times[1]]++;
+      });
+      graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
+      graficosJogos[jogoKey].update();
     });
+  });
 
-    function atualizarGraficoPizza(dados) {
-      graficoPizza.data.datasets[0].data = [
-        dados.cfc || 0,
-        dados.estressados || 0,
-        dados.chupisco || 0,
-        dados.monobola || 0
-      ];
-      graficoPizza.update();
-    }
+  document.getElementById("form-multipla").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const nome = document.getElementById("apostador").value.trim();
+    if (!nome) return alert("Digite seu nome!");
 
-    function atualizarVotos() {
-      db.ref('votacaoFinal').on('value', snap => {
-        const d = snap.val() || {};
-        document.getElementById("final-cfc").textContent = d.cfc || 0;
-        document.getElementById("final-estressados").textContent = d.estressados || 0;
-        document.getElementById("final-chupisco").textContent = d.chupisco || 0;
-        document.getElementById("final-monobola").textContent = d.monobola || 0;
-        atualizarGraficoPizza(d);
-      });
-    }
+    const formData = new FormData(this);
+    const aposta = { nome };
+    formData.forEach((value, key) => { aposta[key] = value });
 
-    atualizarVotos();
+    db.ref("apostasMultiplas/" + Date.now()).set(aposta);
+    document.getElementById("resultado-multipla").innerText = `Aposta registrada para ${nome}!`;
+    this.reset();
+    document.getElementById("apostador").value = "";
+  });
+</script>
 
-    function votarFinal(time) {
-      const user = firebase.auth().currentUser;
-      if (!user) return alert("Você precisa estar logado para votar.");
-
-      const ref = db.ref('usuariosVotaramFinal/' + user.uid);
-      ref.once('value').then(snap => {
-        if (snap.exists()) {
-          alert("Você já votou na final!");
-        } else {
-          ref.set(true);
-          db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
-          alert("Voto registrado!");
-        }
-      });
-    }
-
-    const graficosJogos = {};
-    const nomesJogos = [
-      ['cfc', 'monobolas'],
-      ['chupiscos', 'estressados'],
-      ['cfc', 'estressados'],
-      ['chupiscos', 'monobolas'],
-      ['chupiscos', 'cfc'],
-      ['monobolas', 'estressados']
-    ];
-
-    nomesJogos.forEach((times, i) => {
-      const ctx = document.getElementById(grafico-jogo${i + 1}).getContext('2d');
-      graficosJogos[jogo${i + 1}] = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: times,
-          datasets: [{
-            data: [0, 0],
-            backgroundColor: ['#2ecc71', '#e67e22']
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true }
-          },
-          plugins: { legend: { display: false } }
-        }
-      });
-
-      db.ref(apostasMultiplas).on('value', snap => {
-        const apostas = snap.val() || {};
-        let contagem = { [times[0]]: 0, [times[1]]: 0 };
-        Object.values(apostas).forEach(ap => {
-          if (ap[jogo${i + 1}] === times[0]) contagem[times[0]]++;
-          if (ap[jogo${i + 1}] === times[1]) contagem[times[1]]++;
-        });
-        graficosJogos[jogo${i + 1}].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
-        graficosJogos[jogo${i + 1}].update();
-      });
-    });
-
-    document.getElementById("form-multipla").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const nome = document.getElementById("apostador").value.trim();
-      if (!nome) return alert("Digite seu nome!");
-
-      const formData = new FormData(this);
-      const aposta = { nome };
-      formData.forEach((value, key) => { aposta[key] = value });
-
-      db.ref("apostasMultiplas/" + Date.now()).set(aposta);
-      document.getElementById("resultado-multipla").innerText = Aposta registrada para ${nome}!;
-      this.reset();
-      document.getElementById("apostador").value = "";
-    });
-  </script>
 </body>
 </html>
