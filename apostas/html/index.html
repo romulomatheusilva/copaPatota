@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COPA PATOTA - Apostas</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>COPA PATOTA - Apostas</h1>
+    <h2>Vote nos Vencedores dos Jogos</h2>
+    
+    <div class="jogos-multiplos">
+      <h2>Aposta Múltipla: Acertos nos 6 Jogos</h2>
+      <form id="form-multipla">
+        <div id="selecao-jogos-multiplos">
+          <!-- Exemplo de seleção dinâmica -->
+          <label>Jogo 1:
+            <select name="jogo1">
+              <option value="Time A">Time A</option>
+              <option value="Time B">Time B</option>
+            </select>
+          </label>
+          <!-- Adicione os outros jogos como quiser -->
+        </div>
+        <button type="submit" style="margin-top: 10px;">Confirmar Aposta Múltipla</button>
+      </form>
+      <div class="resultado" id="resultado-multipla">
+        Nenhuma aposta múltipla registrada ainda.
+      </div>
+    </div>
+    
+    <div class="final">
+      <h2>Quem será o Campeão da Final?</h2>
+      <div class="jogo">
+        <button onclick="votarFinal('cfc')">
+          <img src="../img/cabaco.jpg" alt="CFC Logo" class="team-logo" />CFC
+        </button>
+        <button onclick="votarFinal('estressados')">
+          <img src="../img/estressados.jpg" alt="Estressados FC Logo" class="team-logo" />Estressados FC
+        </button>
+        <button onclick="votarFinal('chupisco')">
+          <img src="../img/chupisco.jpg" alt="Chupisco FC Logo" class="team-logo" />Chupisco FC
+        </button>
+        <button onclick="votarFinal('monobola')">
+          <img src="../img/monobola.jpg" alt="Monobola RFC Logo" class="team-logo" />Monobola RFC
+        </button>
+      </div>
+      <div class="resultado" id="final-resultado">
+        Votos para o campeão: <br />
+        CFC: <span id="final-cfc">0</span> |
+        Estressados: <span id="final-estressados">0</span> |
+        Chupisco FC: <span id="final-chupisco">0</span> |
+        Monobola RFC: <span id="final-monobola">0</span>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 COPA PATOTA. Todos os direitos reservados.
+    </footer>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
+      authDomain: "copapatota.firebaseapp.com",
+      databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
+      projectId: "copapatota",
+      storageBucket: "copapatota.appspot.com",
+      messagingSenderId: "916525284122",
+      appId: "1:916525284122:web:b03f134cdd375d3436caa3"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Votação da final
+    function votarFinal(time) {
+      const votosRef = db.ref('votacaoFinal/' + time);
+      votosRef.transaction(function (votos) {
+        return (votos || 0) + 1;
+      });
+    }
+
+    // Atualizar visual dos votos
+    function atualizarVotos() {
+      db.ref('votacaoFinal').on('value', (snapshot) => {
+        const dados = snapshot.val() || {};
+        document.getElementById("final-cfc").textContent = dados.cfc || 0;
+        document.getElementById("final-estressados").textContent = dados.estressados || 0;
+        document.getElementById("final-chupisco").textContent = dados.chupisco || 0;
+        document.getElementById("final-monobola").textContent = dados.monobola || 0;
+      });
+    }
+
+    atualizarVotos();
+
+    // Aposta múltipla
+    document.getElementById("form-multipla").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const aposta = {};
+      formData.forEach((value, key) => {
+        aposta[key] = value;
+      });
+
+      const timestamp = Date.now();
+      db.ref("apostasMultiplas/" + timestamp).set(aposta);
+
+      document.getElementById("resultado-multipla").innerText = "Aposta registrada!";
+      this.reset();
+    });
+  </script>
+</body>
+</html>
