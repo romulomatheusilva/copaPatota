@@ -177,13 +177,27 @@
     }
   });
 
+  // Cores personalizadas dos times
+  const coresPorTime = {
+    cfc: '#1f2c5c',          // Azul escuro
+    estressados: '#e74c3c',  // Vermelho intenso
+    chupiscos: '#7f8c8d',    // Cinza neutro
+    monobolas: '#8e2d2d'     // Vinho escuro
+  };
+
+  // Gráfico final - pizza
   const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
     type: 'pie',
     data: {
       labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
       datasets: [{
         data: [0, 0, 0, 0],
-        backgroundColor: ['#2ecc71', '#3498db', '#f1c40f', '#e67e22']
+        backgroundColor: [
+          coresPorTime.cfc,
+          coresPorTime.estressados,
+          coresPorTime.chupiscos,
+          coresPorTime.monobolas
+        ]
       }]
     },
     options: {
@@ -244,40 +258,47 @@
   ];
 
   nomesJogos.forEach((times, i) => {
-    const canvasId = `grafico-jogo${i + 1}`;
+    const idCanvas = `grafico-jogo${i + 1}`;
+    const ctx = document.getElementById(idCanvas).getContext('2d');
     const jogoKey = `jogo${i + 1}`;
-    const ctx = document.getElementById(canvasId).getContext('2d');
 
     graficosJogos[jogoKey] = new Chart(ctx, {
-      type: 'pie',
+      type: 'bar',
       data: {
         labels: times,
         datasets: [{
           data: [0, 0],
-          backgroundColor: ['#2ecc71', '#e67e22']
+          backgroundColor: [
+            coresPorTime[times[0]],
+            coresPorTime[times[1]]
+          ]
         }]
       },
       options: {
-        responsive: false,
-        plugins: {
-          legend: { position: 'bottom' }
-        }
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        },
+        plugins: { legend: { display: false } }
       }
     });
 
-    db.ref("apostasMultiplas").on('value', snap => {
+    db.ref('apostasMultiplas').on('value', snap => {
       const apostas = snap.val() || {};
       let contagem = { [times[0]]: 0, [times[1]]: 0 };
       Object.values(apostas).forEach(ap => {
         if (ap[jogoKey] === times[0]) contagem[times[0]]++;
         if (ap[jogoKey] === times[1]) contagem[times[1]]++;
       });
-      graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
+      graficosJogos[jogoKey].data.datasets[0].data = [
+        contagem[times[0]],
+        contagem[times[1]]
+      ];
       graficosJogos[jogoKey].update();
     });
   });
 
-  document.getElementById("form-multipla").addEventListener("submit", function (e) {
+  document.getElementById("form-multipla").addEventListener("submit", function(e) {
     e.preventDefault();
     const nome = document.getElementById("apostador").value.trim();
     if (!nome) return alert("Digite seu nome!");
@@ -292,6 +313,7 @@
     document.getElementById("apostador").value = "";
   });
 </script>
+
 
 </body>
 </html>
