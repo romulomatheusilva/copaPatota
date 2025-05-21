@@ -152,10 +152,12 @@
     messagingSenderId: "916525284122",
     appId: "1:916525284122:web:b03f134cdd375d3436caa3"
   };
+
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   const auth = firebase.auth();
 
+  // Login com Google
   window.fazerLoginGoogle = function () {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider)
@@ -177,27 +179,14 @@
     }
   });
 
-  // Cores personalizadas dos times
-  const coresPorTime = {
-    cfc: '#1f2c5c',          // Azul escuro
-    estressados: '#e74c3c',  // Vermelho intenso
-    chupiscos: '#7f8c8d',    // Cinza neutro
-    monobolas: '#8e2d2d'     // Vinho escuro
-  };
-
-  // Gráfico final - pizza
+  // Gráfico da final
   const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
     type: 'pie',
     data: {
       labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
       datasets: [{
         data: [0, 0, 0, 0],
-        backgroundColor: [
-          coresPorTime.cfc,
-          coresPorTime.estressados,
-          coresPorTime.chupiscos,
-          coresPorTime.monobolas
-        ]
+        backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#8e2d2d']
       }]
     },
     options: {
@@ -247,6 +236,7 @@
     });
   }
 
+  // Gráficos dos jogos
   const graficosJogos = {};
   const nomesJogos = [
     ['cfc', 'monobolas'],
@@ -257,29 +247,32 @@
     ['monobolas', 'estressados']
   ];
 
+  const coresTimes = {
+    cfc: '#1f2c5c',
+    estressados: '#e74c3c',
+    chupiscos: '#7f8c8d',
+    monobolas: '#8e2d2d'
+  };
+
   nomesJogos.forEach((times, i) => {
     const idCanvas = `grafico-jogo${i + 1}`;
     const ctx = document.getElementById(idCanvas).getContext('2d');
     const jogoKey = `jogo${i + 1}`;
 
     graficosJogos[jogoKey] = new Chart(ctx, {
-      type: 'bar',
+      type: 'pie',
       data: {
         labels: times,
         datasets: [{
           data: [0, 0],
-          backgroundColor: [
-            coresPorTime[times[0]],
-            coresPorTime[times[1]]
-          ]
+          backgroundColor: times.map(t => coresTimes[t])
         }]
       },
       options: {
         responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        },
-        plugins: { legend: { display: false } }
+        plugins: {
+          legend: { position: 'bottom' }
+        }
       }
     });
 
@@ -290,14 +283,12 @@
         if (ap[jogoKey] === times[0]) contagem[times[0]]++;
         if (ap[jogoKey] === times[1]) contagem[times[1]]++;
       });
-      graficosJogos[jogoKey].data.datasets[0].data = [
-        contagem[times[0]],
-        contagem[times[1]]
-      ];
+      graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
       graficosJogos[jogoKey].update();
     });
   });
 
+  // Formulário múltipla
   document.getElementById("form-multipla").addEventListener("submit", function(e) {
     e.preventDefault();
     const nome = document.getElementById("apostador").value.trim();
@@ -313,6 +304,7 @@
     document.getElementById("apostador").value = "";
   });
 </script>
+
 
 
 </body>
