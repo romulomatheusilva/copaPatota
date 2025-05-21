@@ -154,12 +154,20 @@
       graficoPizza.update();
     }
 
-    // Votação da final
+    // Votação da final com limitação por pessoa
     function votarFinal(time) {
+      if (localStorage.getItem('jaVotouFinal')) {
+        alert("Você já votou na final.");
+        return;
+      }
+
       const votosRef = db.ref('votacaoFinal/' + time);
       votosRef.transaction(function (votos) {
         return (votos || 0) + 1;
       });
+
+      localStorage.setItem('jaVotouFinal', 'true');
+      desabilitarBotoesFinal();
     }
 
     function atualizarVotos() {
@@ -174,9 +182,21 @@
       });
     }
 
-    atualizarVotos();
+    function desabilitarBotoesFinal() {
+      const botoes = document.querySelectorAll(".final .jogo button");
+      botoes.forEach(btn => btn.disabled = true);
+    }
 
-    // Aposta múltipla com nome do apostador
+    // Verifica se já votou
+    document.addEventListener("DOMContentLoaded", () => {
+      atualizarVotos();
+
+      if (localStorage.getItem('jaVotouFinal')) {
+        desabilitarBotoesFinal();
+      }
+    });
+
+    // Aposta múltipla
     document.getElementById("form-multipla").addEventListener("submit", function(e) {
       e.preventDefault();
 
