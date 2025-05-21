@@ -156,7 +156,6 @@
   const db = firebase.database();
   const auth = firebase.auth();
 
-  // ✅ Agora é global
   window.fazerLoginGoogle = function () {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider)
@@ -187,7 +186,12 @@
         backgroundColor: ['#2ecc71', '#3498db', '#f1c40f', '#e67e22']
       }]
     },
-    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
   });
 
   function atualizarGraficoPizza(dados) {
@@ -240,12 +244,12 @@
   ];
 
   nomesJogos.forEach((times, i) => {
-    const idCanvas = `grafico-jogo${i + 1}`;
-    const ctx = document.getElementById(idCanvas).getContext('2d');
+    const canvasId = `grafico-jogo${i + 1}`;
     const jogoKey = `jogo${i + 1}`;
+    const ctx = document.getElementById(canvasId).getContext('2d');
 
     graficosJogos[jogoKey] = new Chart(ctx, {
-      type: 'bar',
+      type: 'pie',
       data: {
         labels: times,
         datasets: [{
@@ -254,15 +258,14 @@
         }]
       },
       options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        },
-        plugins: { legend: { display: false } }
+        responsive: false,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
       }
     });
 
-    db.ref('apostasMultiplas').on('value', snap => {
+    db.ref("apostasMultiplas").on('value', snap => {
       const apostas = snap.val() || {};
       let contagem = { [times[0]]: 0, [times[1]]: 0 };
       Object.values(apostas).forEach(ap => {
@@ -274,7 +277,7 @@
     });
   });
 
-  document.getElementById("form-multipla").addEventListener("submit", function(e) {
+  document.getElementById("form-multipla").addEventListener("submit", function (e) {
     e.preventDefault();
     const nome = document.getElementById("apostador").value.trim();
     if (!nome) return alert("Digite seu nome!");
