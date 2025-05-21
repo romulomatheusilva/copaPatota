@@ -244,4 +244,55 @@ footer {
   width: 160px !important;
   height: 160px !important;
 }
+/* Organiza cada bloco de jogo com gráfico ao lado */
+.container > div:has(canvas[id^="grafico-jogo"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1e242b;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Estiliza os selects */
+.container select {
+  background-color: #111417;
+  color: #fff;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  min-width: 200px;
+}
+
+/* Limita o tamanho dos gráficos */
+.container canvas[id^="grafico-jogo"] {
+  max-width: 120px;
+  max-height: 120px;
+}
+
+/* Títulos de jogos */
+.container label {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container > div:has(canvas[id^="grafico-jogo"]) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .container canvas[id^="grafico-jogo"] {
+    align-self: center;
+  }
+}
+
 
