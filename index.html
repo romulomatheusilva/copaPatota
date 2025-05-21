@@ -275,7 +275,7 @@
         };
 
         graficoFinal = new Chart(ctx, {
-          type: 'bar',
+          type: 'pie',
           data: {
             labels: ['CFC', 'Estressados', 'Chupiscos', 'Monobolas'],
             datasets: [{
@@ -404,7 +404,7 @@
           if (chartsJogos[jogoKey]) chartsJogos[jogoKey].destroy();
 
           chartsJogos[jogoKey] = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: {
               labels: jogosMultiplos[jogoKey].map(time => time.charAt(0).toUpperCase() + time.slice(1)),
               datasets: [{
