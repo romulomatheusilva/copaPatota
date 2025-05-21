@@ -1,148 +1,242 @@
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
-/* Fundo escuro principal */
+/* Base */
 body {
+  margin: 0;
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
   background-color: #1b1f23;
-  color: #ffffff;
-  padding: 1rem;
-  min-height: 100vh;
+  color: #ecf0f1;
 }
 
-/* Container principal */
+/* Estrutura principal */
 .container {
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
-  background-color: #2a2f36;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  padding: 30px 20px;
 }
 
 /* Títulos */
 h1, h2 {
-  color: #2ecc71;
-  margin-bottom: 1rem;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
 }
 
 /* Inputs e selects */
-input[type="text"],
-select {
-  background-color: #1b1f23;
-  border: 2px solid #2ecc71;
-  color: #ffffff;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
+input[type="text"], select {
   width: 100%;
-  transition: 0.3s ease;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #34495e;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 8px;
 }
 
-input[type="text"]:focus,
-select:focus {
-  outline: none;
-  border-color: #27ae60;
-  box-shadow: 0 0 5px #2ecc71;
+input::placeholder {
+  color: #bdc3c7;
 }
 
 /* Botões */
-button {
+button, .btn {
   background-color: #2ecc71;
   color: #1b1f23;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
   font-weight: bold;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+button:hover, .btn:hover {
   background-color: #27ae60;
 }
 
-/* Gráficos */
-.grafico-jogo {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 0.5rem;
-}
-
-/* Login */
-#login-container {
-  max-width: 500px;
-  margin: 2rem auto;
-  background-color: #2a2f36;
-  padding: 2rem;
+/* Jogo comum */
+.jogo {
+  background-color: #2c3e50;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  transition: transform 0.2s ease;
 }
 
-#login-container h2 {
-  color: #2ecc71;
-  margin-bottom: 1rem;
+.jogo:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 10px #2ecc71;
 }
 
-/* Jogo container */
-.jogo-container {
+/* Label nos jogos */
+.jogo label {
+  flex: 1 1 45%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #27ae60;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.jogo label:hover {
+  background-color: #2ecc71;
+}
+
+.jogo input[type="radio"] {
+  margin-right: 10px;
+  accent-color: #1abc9c;
+  transform: scale(1.2);
+}
+
+/* Logos */
+.team-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+/* Aposta Múltipla */
+.jogos-multiplos {
+  background-color: #2c3338;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.jogos-multiplos h2 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+#selecao-jogos-multiplos label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #252b33;
-  border-radius: 10px;
+  background-color: #1e2429;
+  color: #ffffff;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  font-size: 1rem;
 }
 
-/* Seleção múltipla */
-.jogos-multiplos h2 {
-  margin-top: 2rem;
-}
-
-/* Resultado de apostas */
-.resultado {
-  margin-top: 1rem;
-  background-color: #1e242b;
-  padding: 1rem;
-  border-left: 4px solid #2ecc71;
+#selecao-jogos-multiplos select {
+  background-color: #111417;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
   border-radius: 8px;
+  font-size: 0.95rem;
 }
 
-/* Botões da final */
-.final .jogo {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 1rem 0;
-  justify-content: center;
+/* Resultado */
+.resultado, #resultado-multipla {
+  background-color: #1e2a33;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 1rem;
+  line-height: 1.6;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
-.final .jogo button {
+/* Formulário múltiplo */
+#form-multipla {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
 }
 
-/* Logo dos times */
-.team-logo {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
+#form-multipla > button {
+  margin-top: 1rem;
 }
 
-/* Rodapé */
+/* Footer */
 footer {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 40px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .jogo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .jogo label {
+    width: 100%;
+  }
+
+  .team-logo {
+    width: 28px;
+    height: 28px;
+  }
+}
+/* Gráfico (Chart.js) */
+#votosChart {
+  max-width: 100%;
+  height: auto;
+  max-height: 400px; /* Limita a altura */
+  margin: 0 auto;
+  display: block;
+}
+.jogo-grafico-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f2428;
   padding: 1rem;
-  color: #aaaaaa;
-  font-size: 0.9rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.jogo-grafico-container label {
+  flex: 1;
+  color: #fff;
+}
+
+.jogo-grafico-container canvas {
+  width: 200px !important;
+  height: 200px !important;
+  background-color: #2c3e50;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .jogo-grafico-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .jogo-grafico-container canvas {
+    width: 100% !important;
+    height: 200px !important;
+  }
 }
