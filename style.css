@@ -476,5 +476,75 @@ footer::before {
   from { background-position: 0 0; }
   to { background-position: 100% 0; }
 }
+/* Responsividade dos gráficos dos jogos */
+canvas[id^="grafico-jogo"] {
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 160px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Layout flexível do container dos gráficos */
+.container > div:has(canvas[id^="grafico-jogo"]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Versão mobile: coluna */
+@media (max-width: 768px) {
+  .container > div:has(canvas[id^="grafico-jogo"]) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .container canvas[id^="grafico-jogo"] {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 180px;
+  }
+}
+
+/* Botões de votação responsivos */
+.jogo label {
+  width: 100%;
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #27ae60;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .jogo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .jogo label {
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  .jogo input[type="radio"] {
+    transform: scale(1.1);
+    margin-right: 8px;
+  }
+
+  .team-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+  }
+}
 
 
