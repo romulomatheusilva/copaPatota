@@ -31,7 +31,6 @@
   <div class="container" style="display: none;">
     <h1>COPA PATOTA - Apostas</h1>
    
-    
     <label for="apostador">Seu nome:</label>
     <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
 
@@ -144,7 +143,6 @@
             <th>Meio</th>
             <th>Defesa</th>
             <th>T</th>
-            <th>Faltam</th>
           </tr>
         </thead>
         <tbody>
@@ -154,7 +152,6 @@
       <td data-label="Meio">Tururu 10, Felipe 7</td>
       <td data-label="Defesa">Romulo 14, Arthur 4</td>
       <td data-label="T">15</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
     </tr>
     <tr>
       <td data-label="Time"><strong>Estressados FC</strong></td>
@@ -162,7 +159,6 @@
       <td data-label="Meio">Rodriguinho 7, Gilberto 11</td>
       <td data-label="Defesa">Benjamim 5, Gordo 4</td>
       <td data-label="T">15</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
     </tr>
     <tr>
       <td data-label="Time"><strong>Chupisco FC</strong></td>
@@ -170,7 +166,6 @@
       <td data-label="Meio">Heitor 7, <strong>Marinho</strong> 99</td>
       <td data-label="Defesa">Henryco 5, Kelvys 11</td>
       <td data-label="T">15</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
     </tr>
     <tr>
       <td data-label="Time"><strong>Monobola RFC</strong></td>
@@ -178,10 +173,8 @@
       <td data-label="Meio">Pedro 10, Nicolas 87</td>
       <td data-label="Defesa">Salsicha 11, Luiz Paulo 3</td>
       <td data-label="T">14.5</td>
-      <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
     </tr>
-      </tbody>
-
+        </tbody>
       </table>
     </div>
     
@@ -333,32 +326,68 @@
       const apostas = snap.val() || {};
       let contagem = { [times[0]]: 0, [times[1]]: 0 };
       Object.values(apostas).forEach(ap => {
-        if (ap[jogoKey] === times[0]) contagem[times[0]]++;
-        if (ap[jogoKey] === times[1]) contagem[times[1]]++;
+        if (ap[jogoKey]) contagem[ap[jogoKey]]++;
       });
       graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
       graficosJogos[jogoKey].update();
     });
   });
 
-  // Formulário múltipla
-  document.getElementById("form-multipla").addEventListener("submit", function(e) {
+  // Formulário aposta múltipla
+  const formMultipla = document.getElementById('form-multipla');
+  formMultipla.addEventListener('submit', e => {
     e.preventDefault();
-    const nome = document.getElementById("apostador").value.trim();
-    if (!nome) return alert("Digite seu nome!");
+    const user = firebase.auth().currentUser;
+    if (!user) return alert("Você precisa estar logado para apostar.");
 
-    const formData = new FormData(this);
-    const aposta = { nome };
-    formData.forEach((value, key) => { aposta[key] = value });
+    const apostador = document.getElementById('apostador').value.trim();
+    if (!apostador) return alert("Por favor, informe seu nome.");
 
-    db.ref("apostasMultiplas/" + Date.now()).set(aposta);
-    document.getElementById("resultado-multipla").innerText = `Aposta registrada para ${nome}!`;
-    this.reset();
-    document.getElementById("apostador").value = "";
+    const formData = new FormData(formMultipla);
+    const aposta = {};
+    for(let i = 1; i <= 6; i++) {
+      const val = formData.get(`jogo${i}`);
+      if (!val) return alert(`Selecione uma opção para o Jogo ${i}`);
+      aposta[`jogo${i}`] = val;
+    }
+
+    db.ref('apostasMultiplas/' + user.uid).set({
+      nome: apostador,
+      ...aposta
+    }).then(() => {
+      alert("Aposta múltipla registrada com sucesso!");
+      mostrarResultadoMultipla();
+    }).catch(err => {
+      alert("Erro ao registrar aposta: " + err.message);
+    });
   });
-</script>
 
+  function mostrarResultadoMultipla() {
+    db.ref('apostasMultiplas').once('value').then(snap => {
+      const apostas = snap.val() || {};
+      const contagem = { jogo1: {}, jogo2: {}, jogo3: {}, jogo4: {}, jogo5: {}, jogo6: {} };
+      Object.values(apostas).forEach(ap => {
+        for(let i=1; i<=6; i++) {
+          const escolha = ap[`jogo${i}`];
+          contagem[`jogo${i}`][escolha] = (contagem[`jogo${i}`][escolha] || 0) + 1;
+        }
+      });
 
+      let texto = '';
+      for(let i=1; i<=6; i++) {
+        texto += `<strong>Jogo ${i}:</strong> `;
+        const timesJogo = Object.keys(contagem[`jogo${i}`]);
+        timesJogo.forEach(time => {
+          texto += `${time} (${contagem[`jogo${i}`][time]} votos) `;
+        });
+        texto += '<br>';
+      }
 
+      document.getElementById('resultado-multipla').innerHTML = texto;
+    });
+  }
+
+  mostrarResultadoMultipla();
+  </script>
 </body>
 </html>
