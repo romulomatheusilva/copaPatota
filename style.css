@@ -197,3 +197,11 @@ footer {
     height: 28px;
   }
 }
+/* Gráfico (Chart.js) */
+#votosChart {
+  max-width: 100%;
+  height: auto;
+  max-height: 400px; /* Limita a altura */
+  margin: 0 auto;
+  display: block;
+}
