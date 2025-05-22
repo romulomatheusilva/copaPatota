@@ -345,10 +345,12 @@ async function fazerLoginGoogle() {
         aposta[jogoKey] = escolha;
       }
   
-      db.ref('apostasMultiplas/' + user.uid).set({
+           db.ref('apostasMultiplas').push({
         nome: userName,
         aposta: aposta,
         timestamp: Date.now()
+      
+
       }).then(() => {
         document.getElementById('resultado-multipla').textContent = `Aposta múltipla registrada para ${userName}!`;
         carregarDadosMultiplos();
