@@ -195,6 +195,53 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
+    authDomain: "copapatota.firebaseapp.com",
+    databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
+    projectId: "copapatota",
+    storageBucket: "copapatota.appspot.com",
+    messagingSenderId: "916525284122",
+    appId: "1:916525284122:web:b03f134cdd375d3436caa3"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
+
+  let isLoggingIn = false;
+
+  async function fazerLoginGoogle() {
+    if (isLoggingIn) return;
+    isLoggingIn = true;
+
+    const loginBtn = document.getElementById('loginBtn');
+    loginBtn.disabled = true;
+    loginBtn.innerText = "Conectando...";
+
+    const provider = new firebase.auth.GoogleAuthProvider(); // ✅ Aqui é a correção
+
+    try {
+      await firebase.auth().signInWithPopup(provider); // ✅ Aqui também
+    } catch (error) {
+      console.error("Erro no login:", error);
+
+      if (error.code === "auth/cancelled-popup-request") {
+        alert("Você já está tentando se conectar. Aguarde ou feche a outra janela de login.");
+      } else if (error.code === "auth/popup-closed-by-user") {
+        alert("Você fechou a janela de login. Tente novamente.");
+      } else {
+        alert("Erro ao fazer login: " + error.message);
+      }
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.innerText = "Entrar com Google";
+      isLoggingIn = false;
+    }
+  }
+  </script>
+
    <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
