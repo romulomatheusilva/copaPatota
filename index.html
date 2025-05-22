@@ -25,8 +25,8 @@
   <div class="container">
     <h1>COPA PATOTA - Apostas</h1>
 
-    <label for="apostador">Seu nome:</label>
-    <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
+    <label for="dor">Seu nome:</label>
+    <input type="text" id="dor" name="dor" required placeholder="Digite seu nome" />
 
     <!-- Adicione um container para os gráficos -->
     <div id="graficos">
@@ -35,7 +35,7 @@
 
     <h2>Vote nos Vencedores dos Jogos</h2>
     <div class="jogos-multiplos">
-      <h2>Aposta Múltipla: Acertos nos 6 Jogos</h2>
+      <h2> Múltipla: Acertos nos 6 Jogos</h2>
       <form id="form-multipla">
         <div id="selecao-jogos-multiplos">
           <div class="jogo-container">
@@ -98,10 +98,10 @@
             <canvas id="grafico-jogo6" class="grafico-jogo"></canvas>
           </div>
         </div>
-        <button type="submit" style="margin-top: 10px;">Confirmar Aposta Múltipla</button>
+        <button type="submit" style="margin-top: 10px;">Confirmar  Múltipla</button>
       </form>
       <div class="resultado" id="resultado-multipla">
-        Nenhuma aposta múltipla registrada ainda.
+        Nenhuma  múltipla registrada ainda.
       </div>
     </div>
 
@@ -191,7 +191,6 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script>
   const firebaseConfig = {
     apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
@@ -205,56 +204,11 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
-  const auth = firebase.auth();
-
-  let isLoggingIn = false;
-
-  async function fazerLoginGoogle() {
-    if (isLoggingIn) return;
-    isLoggingIn = true;
-
-    const loginBtn = document.getElementById('loginBtn');
-    loginBtn.disabled = true;
-    loginBtn.innerText = "Conectando...";
-
-    const provider = new firebase.auth.GoogleAuthProvider(); // ✅ Aqui é a correção
-
-    try {
-      await firebase.auth().signInWithPopup(provider); // ✅ Aqui também
-    } catch (error) {
-      console.error("Erro no login:", error);
-
-      if (error.code === "auth/cancelled-popup-request") {
-        alert("Você já está tentando se conectar. Aguarde ou feche a outra janela de login.");
-      } else if (error.code === "auth/popup-closed-by-user") {
-        alert("Você fechou a janela de login. Tente novamente.");
-      } else {
-        alert("Erro ao fazer login: " + error.message);
-      }
-    } finally {
-      loginBtn.disabled = false;
-      loginBtn.innerText = "Entrar com Google";
-      isLoggingIn = false;
-    }
-  }
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-  <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAPSO_BV6U0l2uJ9xdGtTg1CjQhUbUYv9Q",
-    authDomain: "copapatota.firebaseapp.com",
-    databaseURL: "https://copapatota-default-rtdb.firebaseio.com",
-    projectId: "copapatota",
-    storageBucket: "copapatota.appspot.com",
-    messagingSenderId: "916525284122",
-    appId: "1:916525284122:web:b03f134cdd375d3436caa3"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
+  
+  
+  
   function votarFinal(time) {
-    const userName = document.getElementById('apostador').value.trim();
+    const userName = document.getElementById('dor').value.trim();
     if (!userName) {
       alert('Digite seu nome antes de votar na final.');
       return;
@@ -321,12 +275,12 @@
     jogo6: ['monobolas', 'estressados'],
   };
 
-  function registrarApostaMultipla(event) {
+  function registrarMultipla(event) {
     event.preventDefault();
 
-    const userName = document.getElementById('apostador').value.trim();
+    const userName = document.getElementById('dor').value.trim();
     if (!userName) {
-      alert('Digite seu nome para registrar a aposta múltipla.');
+      alert('Digite seu nome para registrar a  múltipla.');
       return;
     }
 
@@ -413,8 +367,8 @@ jogos.forEach(jogo => {
 
     snapshot.forEach(child => {
       const aposta = child.val();
-      const escolha = aposta[jogo.id];
-      if (votos[escolha] !== undefined) votos[escolha]++;
+      const escolha = aposta.aposta?.[jogo.id];
+       if (votos[escolha] !== undefined) votos[escolha]++;
     });
 
     const data = {
