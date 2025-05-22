@@ -25,7 +25,9 @@
   <div id="login-container" style="text-align: center; padding: 2rem;">
     <h2>Bem-vindo à Copa Patota!</h2>
     <p>Faça login com sua conta Google para votar:</p>
-    <button onclick="fazerLoginGoogle()">Entrar com Google</button>
+<!-- <button onclick="fazerLoginGoogle()">Entrar com Google</button> -->
+    <button id="loginBtn" onclick="fazerLoginGoogle()">Entrar com Google</button>
+
   </div>
 
   <div class="container" style="display: none;">
@@ -208,19 +210,38 @@
     const db = firebase.database();
     const auth = firebase.auth();
   
-    function fazerLoginGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then(() => {
-          document.getElementById('login-container').style.display = 'none';
-          document.querySelector('.container').style.display = 'block';
-          carregarDadosFinais();
-          carregarGraficoFinal();
-          carregarDadosMultiplos();
-          configurarListenerApostasMultiplas();
-        })
-        .catch(error => alert("Erro no login: " + error.message));
+    let isLoggingIn = false;
+
+async function fazerLoginGoogle() {
+  if (isLoggingIn) return; // impede múltiplos cliques
+  isLoggingIn = true;
+
+  const loginBtn = document.getElementById('loginBtn');
+  loginBtn.disabled = true;
+  loginBtn.innerText = "Conectando...";
+
+  const provider = new GoogleAuthProvider();
+
+  try {
+    await signInWithPopup(auth, provider);
+    // login bem-sucedido - redirecionamento ou lógica já é feita por onAuthStateChanged
+  } catch (error) {
+    console.error("Erro no login:", error);
+    
+    if (error.code === "auth/cancelled-popup-request") {
+      alert("Você já está tentando se conectar. Aguarde ou feche a outra janela de login.");
+    } else if (error.code === "auth/popup-closed-by-user") {
+      alert("Você fechou a janela de login. Tente novamente.");
+    } else {
+      alert("Erro ao fazer login: " + error.message);
     }
+  } finally {
+    loginBtn.disabled = false;
+    loginBtn.innerText = "Entrar com Google";
+    isLoggingIn = false;
+  }
+}
+
   
     function votarFinal(time) {
       const user = auth.currentUser;
