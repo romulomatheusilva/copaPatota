@@ -237,7 +237,7 @@
       const votoRef = db.ref('votacaoFinal/' + time);
       votoRef.transaction(current => (current || 0) + 1);
   
-      alert(Voto registrado para ${time.toUpperCase()}!);
+      alert(`Voto registrado para ${time.toUpperCase()}!`);
       carregarDadosFinais();
       carregarGraficoFinal();
     }
@@ -317,7 +317,7 @@
         const escolha = form[jogoKey].value;
   
         if (!jogosMultiplos[jogoKey].includes(escolha)) {
-          alert(Escolha inválida para o ${jogoKey}: ${escolha});
+          alert(`Escolha inválida para o ${jogoKey}: ${escolha}`);
           return;
         }
   
@@ -329,7 +329,7 @@
         aposta: aposta,
         timestamp: Date.now()
       }).then(() => {
-        document.getElementById('resultado-multipla').textContent = Aposta múltipla registrada para ${userName}!;
+        document.getElementById('resultado-multipla').textContent = `Aposta múltipla registrada para ${userName}!`;
         carregarDadosMultiplos();
       }).catch(err => {
         alert('Erro ao registrar aposta: ' + err.message);
@@ -351,7 +351,7 @@
   
         const ultimas = Object.values(data).sort((a,b) => b.timestamp - a.timestamp)[0];
         if (ultimas) {
-          resultadoEl.textContent = Última aposta registrada para ${ultimas.nome}.;
+          resultadoEl.textContent = `Última aposta registrada para ${ultimas.nome}.`;
         }
       });
     }
