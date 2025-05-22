@@ -212,19 +212,19 @@
   
     let isLoggingIn = false;
 
-async function fazerLoginGoogle() {
-  if (isLoggingIn) return; // impede múltiplos cliques
+  async function fazerLoginGoogle() {
+  if (isLoggingIn) return;
   isLoggingIn = true;
 
   const loginBtn = document.getElementById('loginBtn');
   loginBtn.disabled = true;
   loginBtn.innerText = "Conectando...";
 
-  const provider = new GoogleAuthProvider();
+  const provider = new firebase.auth.GoogleAuthProvider(); // <- compatível com versão compat
 
   try {
-    await signInWithPopup(auth, provider);
-    // login bem-sucedido - redirecionamento ou lógica já é feita por onAuthStateChanged
+    await firebase.auth().signInWithPopup(provider); // <- também compatível
+    // O login será detectado pelo onAuthStateChanged
   } catch (error) {
     console.error("Erro no login:", error);
     
