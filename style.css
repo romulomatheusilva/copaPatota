@@ -31,8 +31,8 @@ body::before {
 /* Estilo para a logo da Copa Patota */
 .header-logo {
     display: block; /* Para centralizar com margin auto */
-    margin: 20px auto 10px auto;
-    max-width: 150px; /* Ajuste o tamanho máximo conforme necessário */
+    margin: 20px auto 5px auto; /* Reduzido o margin-bottom para 5px */
+    max-width: 100px; /* Reduzido para ficar menor */
     height: auto;
 }
 
@@ -142,7 +142,7 @@ button:active, .btn:active {
 }
 
 /* ========= JOGOS (SELEÇÃO) ========= */
-.jogo {
+.jogo { /* Este é o container dos botões da final */
   background-color: #2c3e50;
   border-radius: 18px;
   padding: 20px;
@@ -198,8 +198,42 @@ button:active, .btn:active {
   flex-shrink: 0;
 }
 
-/* Alinhamento do label com gráfico */
-.jogo-grafico-container {
+/* Container de cada jogo individual (label + gráfico da múltipla) */
+.jogo-container {
+    display: flex;
+    flex-direction: column; /* Faz o label e o gráfico ficarem um abaixo do outro */
+    align-items: center; /* Centraliza o conteúdo dentro do container do jogo */
+    width: 100%;
+    max-width: 200px; /* Largura máxima para cada container de jogo, para caber vários na linha */
+    gap: 0.5rem; /* Espaçamento entre o label e o gráfico */
+    flex-shrink: 0; /* Impede que os itens encolham abaixo do seu conteúdo */
+    padding: 10px; /* Padding interno para visualização */
+    background-color: #2a3038; /* Um fundo para cada container de jogo */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+
+/* O container que engloba todos os 6 jogos para a aposta múltipla */
+#selecao-jogos-multiplos {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+    justify-content: center; /* Centraliza os jogos na linha */
+    gap: 20px; /* Espaçamento entre os containers de cada jogo */
+    margin-top: 1.5rem;
+}
+
+
+/* Estilo para os elementos canvas dos 6 jogos */
+.grafico-jogo {
+    width: 150px !important; /* Tamanho do gráfico reduzido e forçado */
+    height: 90px !important; /* Tamanho do gráfico reduzido e forçado */
+    margin-top: 10px; /* Espaçamento entre o select e o gráfico */
+}
+
+
+/* Alinhamento do label com gráfico (geral, pode ser menos específico agora) */
+.jogo-grafico-container { /* Não parece estar sendo usado no HTML atual, mas mantido por segurança */
   background-color: #1f2428;
   padding: 1.2rem;
   border-radius: 14px;
@@ -212,16 +246,10 @@ button:active, .btn:active {
   box-shadow: inset 0 0 12px rgba(39, 174, 96, 0.15);
 }
 
-/* Diminuindo o tamanho dos gráficos dos jogos */
-.grafico-jogo { /* Este é o seletor usado no HTML original para os canvas */
-    width: 200px; /* Era 250px */
-    height: 120px; /* Era 150px */
-}
-
-.jogo-grafico-container canvas {
-  flex: 1 1 140px; /* Pode ser ajustado com o .grafico-jogo acima */
-  max-width: 140px !important; /* Pode ser ajustado com o .grafico-jogo acima */
-  height: auto !important; /* Pode ser ajustado com o .grafico-jogo acima */
+.jogo-grafico-container canvas { /* Não parece estar sendo usado diretamente no HTML para os 6 jogos */
+  flex: none; /* Remove flex-grow/shrink se aplicado por uma regra mais geral */
+  max-width: 100% !important; /* Ajusta ao container, mas .grafico-jogo é mais específico */
+  height: auto !important;
   border-radius: 12px;
   background-color: #2c3e50;
   padding: 0.5rem;
@@ -311,29 +339,32 @@ footer {
     padding: 1rem;
   }
 
-  .jogo label {
-    flex: 1 1 100%;
+  /* Ajuste para labels dos selects em telas pequenas */
+  .jogo-container label { /* Usei o seletor mais específico aqui */
+    width: 100%; /* Ocupa largura total */
+    text-align: center; /* Centraliza o texto */
+    justify-content: center; /* Centraliza o conteúdo (incluindo logo) */
     font-size: 0.95rem;
     padding: 12px 14px;
-    justify-content: center;
   }
 
   .jogo-grafico-container {
     flex-direction: column;
     gap: 1rem;
   }
-#resultado-multipla {
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #2ecc71;
-  padding: 1rem 0;
-}
+  #resultado-multipla {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #2ecc71;
+    padding: 1rem 0;
+  }
 
   .jogo-grafico-container canvas {
     max-width: 100% !important;
   }
 }
+/* Estilos da tabela de times */
 .tabela-times {
   margin: 2rem auto;
   max-width: 900px;
