@@ -285,8 +285,9 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // Muito importante: o Chart.js não tentará manter seu próprio aspect ratio
-        // REMOVIDO: aspectRatio: 1 - Deixando o CSS e o maintainAspectRatio: false ditar o tamanho/proporção
+        maintainAspectRatio: false, // Mantido FALSE
+        height: 120, // **NOVO: Definindo uma altura explícita para o gráfico (em pixels)**
+        // largura será controlada pela max-width do .jogo-container no CSS
         plugins: {
           legend: { position: 'bottom' }
         }
