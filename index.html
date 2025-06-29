@@ -182,7 +182,7 @@
     appId: "1:916525284122:web:b03f134cdd375d3436caa3"
   };
 
-  // ... (seu código firebaseConfig e db permanece o mesmo) ...
+  // ... (código firebaseConfig e db permanece o mesmo) ...
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
@@ -263,10 +263,10 @@
   ];
 
   const coresTimes = {
-    cfc: '#1f2c5c',
-    dst: '#e74c3c',
-    chupiscos: '#7f8c8d',
-    monobolas: '#000000'
+    cfc: '#007bff',    // AZUL VIVO para CFC
+    dst: '#2ecc71',   // VERDE para DST
+    chupiscos: '#7f8c8d', // Mantém o cinza
+    monobolas: '#e74c3c' // VERMELHO para Monobolas
   };
 
   nomesJogos.forEach((times, i) => {
@@ -274,7 +274,6 @@
     const ctx = document.getElementById(idCanvas).getContext('2d');
     const jogoKey = `jogo${i + 1}`;
 
-    // ***** ALTERAÇÃO CHAVE AQUI: Definindo o aspectRatio e maintainAspectRatio para controlar o tamanho *****
     graficosJogos[jogoKey] = new Chart(ctx, {
       type: 'pie',
       data: {
@@ -286,8 +285,8 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // Permite que o gráfico use o tamanho do contêiner sem tentar manter uma proporção rígida
-        aspectRatio: 1, // Proporção 1:1, (quadrado). Pode ajustar para outros valores se quiser retangular.
+        maintainAspectRatio: false, // Mantido FALSE para que o CSS controle mais
+        // REMOVIDO: aspectRatio: 1 - Deixando o CSS ditar a proporção
         plugins: {
           legend: { position: 'bottom' }
         }
