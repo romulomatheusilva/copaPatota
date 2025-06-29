@@ -7,22 +7,10 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .jogo-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .grafico-jogo {
-      width: 250px;
-      height: 150px;
-    }
-  </style>
-</head>
+  </head>
 <body>
   <div class="container">
+    <img src="copapatota.png" alt="Logo Copa Patota" class="header-logo" />
     <h1>COPA PATOTA - Apostas</h1>
     
     <label for="apostador">Seu nome:</label>
@@ -201,7 +189,7 @@
   const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
     type: 'pie',
     data: {
-      labels: ['CFC', 'DST', 'Chupisco FC', 'Monobola RFC'], // Alterado aqui
+      labels: ['CFC', 'DST', 'Chupisco FC', 'Monobola RFC'],
       datasets: [{
         data: [0, 0, 0, 0],
         backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#000000']
@@ -218,7 +206,7 @@
   function atualizarGraficoPizza(dados) {
     graficoPizza.data.datasets[0].data = [
       dados.cfc || 0,
-      dados.dst || 0, // Alterado aqui
+      dados.dst || 0,
       dados.chupisco || 0,
       dados.monobola || 0
     ];
@@ -229,7 +217,7 @@
     db.ref('votacaoFinal').on('value', snap => {
       const d = snap.val() || {};
       document.getElementById("final-cfc").textContent = d.cfc || 0;
-      document.getElementById("final-dst").textContent = d.dst || 0; // Alterado aqui
+      document.getElementById("final-dst").textContent = d.dst || 0;
       document.getElementById("final-chupisco").textContent = d.chupisco || 0;
       document.getElementById("final-monobola").textContent = d.monobola || 0;
       atualizarGraficoPizza(d);
@@ -244,15 +232,12 @@
       alert("Por favor, digite seu nome antes de votar na final!");
       return;
     }
-    // Antes, a verificação era pelo UID do Firebase Auth. Agora, para evitar votos duplicados sem login,
-    // vamos verificar se o nome já votou. Isso é menos robusto, mas serve para testes locais.
-    // Em um ambiente de produção, o login seria essencial para evitar abusos.
     db.ref('votosFinaisPorNome/' + nomeApostador).once('value')
       .then(snapshot => {
         if (snapshot.exists()) {
           alert("Você (ou alguém com este nome) já votou na final!");
         } else {
-          db.ref('votosFinaisPorNome/' + nomeApostador).set(time); // Registra que este nome votou
+          db.ref('votosFinaisPorNome/' + nomeApostador).set(time);
           db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
           alert("Voto registrado!");
         }
@@ -268,16 +253,16 @@
   const graficosJogos = {};
   const nomesJogos = [
     ['cfc', 'monobolas'],
-    ['chupiscos', 'dst'], // Alterado aqui
-    ['cfc', 'dst'], // Alterado aqui
+    ['chupiscos', 'dst'],
+    ['cfc', 'dst'],
     ['chupiscos', 'monobolas'],
     ['chupiscos', 'cfc'],
-    ['monobolas', 'dst'] // Alterado aqui
+    ['monobolas', 'dst']
   ];
 
   const coresTimes = {
     cfc: '#1f2c5c',
-    dst: '#e74c3c', // Alterado aqui
+    dst: '#e74c3c',
     chupiscos: '#7f8c8d',
     monobolas: '#000000'
   };
@@ -306,12 +291,11 @@
 
     db.ref('apostasMultiplas').on('value', snap => {
       const apostas = snap.val() || {};
-      // Corrigido para verificar se a chave existe antes de usar.
         let contagem = {};
-        times.forEach(team => contagem[team] = 0); // Inicializa contagem para os times do jogo atual
+        times.forEach(team => contagem[team] = 0);
         Object.values(apostas).forEach(ap => {
             const escolha = ap[jogoKey];
-            if (contagem.hasOwnProperty(escolha)) { // Verifica se a escolha é um dos times do jogo
+            if (contagem.hasOwnProperty(escolha)) {
                 contagem[escolha]++;
             }
         });
@@ -338,18 +322,16 @@
         }
     });
 
-
-    // Adicionando uma verificação para apostas múltiplas por nome
     db.ref('apostasMultiplasPorNome/' + nome).once('value')
       .then(snapshot => {
         if (snapshot.exists()) {
           alert("Você (ou alguém com este nome) já registrou uma aposta múltipla!");
         } else {
           db.ref("apostasMultiplas/" + Date.now()).set(aposta);
-          db.ref('apostasMultiplasPorNome/' + nome).set(true); // Marca que este nome fez uma aposta múltipla
+          db.ref('apostasMultiplasPorNome/' + nome).set(true);
           document.getElementById("resultado-multipla").innerText = `Aposta registrada para ${nome}!`;
           this.reset();
-          document.getElementById("apostador").value = nome; // Mantém o nome no campo após reset
+          document.getElementById("apostador").value = nome;
         }
       })
       .catch(error => {
