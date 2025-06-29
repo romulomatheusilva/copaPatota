@@ -182,7 +182,7 @@
     appId: "1:916525284122:web:b03f134cdd375d3436caa3"
   };
 
-  // ... (código firebaseConfig e db permanece o mesmo) ...
+  // ... (seu código firebaseConfig e db permanece o mesmo) ...
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
@@ -285,8 +285,8 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // Mantido FALSE para que o CSS controle mais
-        // REMOVIDO: aspectRatio: 1 - Deixando o CSS ditar a proporção
+        maintainAspectRatio: false, // Muito importante: o Chart.js não tentará manter seu próprio aspect ratio
+        // REMOVIDO: aspectRatio: 1 - Deixando o CSS e o maintainAspectRatio: false ditar o tamanho/proporção
         plugins: {
           legend: { position: 'bottom' }
         }
