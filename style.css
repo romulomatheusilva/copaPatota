@@ -204,12 +204,13 @@ button:active, .btn:active {
     flex-direction: column; /* Faz o label e o gráfico ficarem um abaixo do outro */
     align-items: center; /* Centraliza o conteúdo dentro do container do jogo */
     width: 100%;
-    max-width: 160px; /* **MAIS REDUZIDO** para caber 3 por linha em telas maiores */
+    max-width: 160px; /* Largura máxima para cada container de jogo, para caber vários na linha */
     flex-shrink: 0; /* Impede que os itens encolham abaixo do seu conteúdo */
     padding: 8px; /* Padding interno para visualização */
     background-color: #2a3038; /* Um fundo para cada container de jogo */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-sizing: border-box; /* Garante que padding e borda sejam incluídos na largura */
 }
 
 
@@ -225,16 +226,16 @@ button:active, .btn:active {
 
 /* Estilo para os elementos canvas dos 6 jogos */
 .grafico-jogo {
-    /* **REMOVER estes, o tamanho será controlado pelo JS e pelo contêiner** */
-    /* width: 150px !important; */
-    /* height: 90px !important; */
-    margin-top: 10px; /* Espaçamento entre o select e o gráfico */
+    width: 120px !important;  /* Força largura do gráfico */
+    height: 120px !important; /* Força altura do gráfico (faz ele quadrado) */
+    display: block; /* Ajuda a respeitar as dimensões */
+    margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
 }
 
 /* Regra para o canvas dentro do jogo-container, para garantir que o Chart.js possa se adaptar */
 .jogo-container canvas {
     max-width: 100%; /* Garante que o canvas não transborde seu pai */
-    height: auto; /* Mantém a proporção */
+    height: auto; /* Mantém a proporção se Chart.js mantiver */
 }
 
 
