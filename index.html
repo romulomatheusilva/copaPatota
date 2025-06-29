@@ -22,7 +22,8 @@
   </style>
 </head>
 <body>
-    <div class="container">     <h1>COPA PATOTA - Apostas</h1>
+  <div class="container">
+    <h1>COPA PATOTA - Apostas</h1>
     
     <label for="apostador">Seu nome:</label>
     <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
@@ -43,20 +44,20 @@
           </div>
 
           <div class="jogo-container">
-            <label>Jogo 2: Chupiscos vs Estressados
+            <label>Jogo 2: Chupiscos vs DST
               <select name="jogo2">
                 <option value="chupiscos">Chupiscos</option>
-                <option value="estressados">Estressados</option>
+                <option value="dst">DST</option>
               </select>
             </label>
             <canvas id="grafico-jogo2" class="grafico-jogo"></canvas>
           </div>
 
           <div class="jogo-container">
-            <label>Jogo 3: CFC vs Estressados
+            <label>Jogo 3: CFC vs DST
               <select name="jogo3">
                 <option value="cfc">CFC</option>
-                <option value="estressados">Estressados</option>
+                <option value="dst">DST</option>
               </select>
             </label>
             <canvas id="grafico-jogo3" class="grafico-jogo"></canvas>
@@ -83,10 +84,10 @@
           </div>
 
           <div class="jogo-container">
-            <label>Jogo 6: Monobolas vs Estressados
+            <label>Jogo 6: Monobolas vs DST
               <select name="jogo6">
                 <option value="monobolas">Monobolas</option>
-                <option value="estressados">Estressados</option>
+                <option value="dst">DST</option>
               </select>
             </label>
             <canvas id="grafico-jogo6" class="grafico-jogo"></canvas>
@@ -105,8 +106,8 @@
         <button onclick="votarFinal('cfc')">
           <img src="cabaco.png" alt="CFC Logo" class="team-logo" />CFC
         </button>
-        <button onclick="votarFinal('estressados')">
-          <img src="estressados.png" alt="Estressados FC Logo" class="team-logo" />Estressados FC
+        <button onclick="votarFinal('dst')">
+          <img src="estressados.png" alt="DST FC Logo" class="team-logo" />DST FC
         </button>
         <button onclick="votarFinal('chupisco')">
           <img src="chupisco.png" alt="Chupisco FC Logo" class="team-logo" />Chupisco FC
@@ -118,7 +119,7 @@
       <div class="resultado" id="final-resultado">
         Votos para o campeão: <br />
         CFC: <span id="final-cfc">0</span> |
-        Estressados: <span id="final-estressados">0</span> |
+        DST: <span id="final-dst">0</span> |
         Chupisco FC: <span id="final-chupisco">0</span> |
         Monobola RFC: <span id="final-monobola">0</span>
       </div>
@@ -148,7 +149,7 @@
             <td><span class="status-completo">✅ Completo</span></td>
           </tr>
           <tr>
-            <td><strong>Estressados FC</strong></td>
+            <td><strong>DST FC</strong></td>
             <td>Julio (4)</td>
             <td>Rodriguinho (3), Gilberto (2)</td>
             <td>Benjamim (3), Gordo (3)</td>
@@ -195,18 +196,12 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
-  // const auth = firebase.auth(); // Autenticação removida
-
-  // Removido o fazerLoginGoogle e onAuthStateChanged
-  // O site agora é visível por padrão, sem login.
-  // document.getElementById("login-container").style.display = "none";
-  // document.querySelector(".container").style.display = "block";
 
   // Gráfico da final
   const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
     type: 'pie',
     data: {
-      labels: ['CFC', 'Estressados', 'Chupisco FC', 'Monobola RFC'],
+      labels: ['CFC', 'DST', 'Chupisco FC', 'Monobola RFC'], // Alterado aqui
       datasets: [{
         data: [0, 0, 0, 0],
         backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#000000']
@@ -223,7 +218,7 @@
   function atualizarGraficoPizza(dados) {
     graficoPizza.data.datasets[0].data = [
       dados.cfc || 0,
-      dados.estressados || 0,
+      dados.dst || 0, // Alterado aqui
       dados.chupisco || 0,
       dados.monobola || 0
     ];
@@ -234,7 +229,7 @@
     db.ref('votacaoFinal').on('value', snap => {
       const d = snap.val() || {};
       document.getElementById("final-cfc").textContent = d.cfc || 0;
-      document.getElementById("final-estressados").textContent = d.estressados || 0;
+      document.getElementById("final-dst").textContent = d.dst || 0; // Alterado aqui
       document.getElementById("final-chupisco").textContent = d.chupisco || 0;
       document.getElementById("final-monobola").textContent = d.monobola || 0;
       atualizarGraficoPizza(d);
@@ -273,16 +268,16 @@
   const graficosJogos = {};
   const nomesJogos = [
     ['cfc', 'monobolas'],
-    ['chupiscos', 'estressados'],
-    ['cfc', 'estressados'],
+    ['chupiscos', 'dst'], // Alterado aqui
+    ['cfc', 'dst'], // Alterado aqui
     ['chupiscos', 'monobolas'],
     ['chupiscos', 'cfc'],
-    ['monobolas', 'estressados']
+    ['monobolas', 'dst'] // Alterado aqui
   ];
 
   const coresTimes = {
     cfc: '#1f2c5c',
-    estressados: '#e74c3c',
+    dst: '#e74c3c', // Alterado aqui
     chupiscos: '#7f8c8d',
     monobolas: '#000000'
   };
@@ -311,11 +306,16 @@
 
     db.ref('apostasMultiplas').on('value', snap => {
       const apostas = snap.val() || {};
-      let contagem = { [times[0]]: 0, [times[1]]: 0 };
-      Object.values(apostas).forEach(ap => {
-        if (ap[jogoKey] === times[0]) contagem[times[0]]++;
-        if (ap[jogoKey] === times[1]) contagem[times[1]]++;
-      });
+      // Corrigido para verificar se a chave existe antes de usar.
+        let contagem = {};
+        times.forEach(team => contagem[team] = 0); // Inicializa contagem para os times do jogo atual
+        Object.values(apostas).forEach(ap => {
+            const escolha = ap[jogoKey];
+            if (contagem.hasOwnProperty(escolha)) { // Verifica se a escolha é um dos times do jogo
+                contagem[escolha]++;
+            }
+        });
+
       graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
       graficosJogos[jogoKey].update();
     });
@@ -329,7 +329,15 @@
 
     const formData = new FormData(this);
     const aposta = { nome };
-    formData.forEach((value, key) => { aposta[key] = value });
+    formData.forEach((value, key) => {
+        // Altera o valor da aposta de 'estressados' para 'dst' se for o caso
+        if (value === 'estressados') {
+            aposta[key] = 'dst';
+        } else {
+            aposta[key] = value;
+        }
+    });
+
 
     // Adicionando uma verificação para apostas múltiplas por nome
     db.ref('apostasMultiplasPorNome/' + nome).once('value')
