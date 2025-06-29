@@ -102,6 +102,8 @@ select {
   transition: all 0.3s ease;
   box-sizing: border-box;
   max-width: 400px; /* Limita a largura para inputs e selects */
+  margin: 10px auto; /* **NOVO: Centraliza inputs/selects** */
+  display: block; /* **NOVO: Garante que o margin auto funcione para centralizar** */
 }
 
 input[type="text"]:focus,
@@ -216,26 +218,16 @@ button:active, .btn:active {
 
 /* Estilo para os elementos canvas dos 6 jogos */
 .grafico-jogo {
-    /* Removendo width/height aqui, Chart.js vai controlar isso com base no JS e no container */
+    min-height: 120px; /* **NOVO: Garante altura mínima para o gráfico** */
+    width: 100%; /* Permite que o gráfico preencha a largura do seu pai */
     display: block; /* Ajuda a respeitar as dimensões */
     margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
-    max-width: 100%; /* Garante que o canvas não transborde seu pai */
-    /* REMOVIDO: height: auto;  - Isso estava permitindo o esticamento infinito */
+    /* Removido: height: auto; */
+    /* Removido: max-width: 100%; */
 }
 
-/* Regra para o canvas dentro do jogo-container, para garantir que o Chart.js possa se adaptar */
-.jogo-container canvas {
-    /* Esta regra é menos específica, a do JS será mais forte agora */
-    /* max-width: 100%; */
-    /* height: auto; */
-    border-radius: 12px;
-    background-color: #2c3e50;
-    padding: 0.5rem;
-    box-shadow: 0 0 10px rgba(46,204,113,0.25);
-    transition: box-shadow 0.3s ease;
-}
-
-.jogo-grafico-container canvas:hover {
+/* Seletor corrigido para hover nos gráficos dos jogos */
+.jogo-container canvas:hover { /* **CORRIGIDO: Era .jogo-grafico-container canvas:hover** */
   box-shadow: 0 0 20px rgba(46,204,113,0.6);
 }
 
@@ -341,7 +333,7 @@ footer {
   /* Ajuste para os gráficos internos em telas pequenas */
   .grafico-jogo {
       width: 100% !important; /* Ocupa a largura total do seu container */
-      height: 200px !important; /* Altura fixa para mobile */
+      min-height: 200px !important; /* Altura fixa para mobile */
   }
 
   #resultado-multipla {
@@ -352,7 +344,7 @@ footer {
     padding: 1rem 0;
   }
 
-  .jogo-grafico-container canvas {
+  .jogo-grafico-container canvas { /* Este seletor não existe, mas mantido caso você o adicione no futuro */
     max-width: 100% !important;
   }
 }
