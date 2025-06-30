@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -22,64 +23,58 @@
       <form id="form-multipla">
         <div id="selecao-jogos-multiplos">
           <div class="jogo-container">
-            <p class="game-title">Jogo 1: CFC vs Monobolas</p>
-            <label for="jogo1-select">Selecione o vencedor:</label>
-            <select id="jogo1-select" name="jogo1">
-              <option value="cfc">CFC</option>
-              <option value="monobolas">Monobolas</option>
-            </select>
-            <canvas id="grafico-jogo1" class="grafico-jogo" width="120" height="120"></canvas>
-          </div>
+            <label>Jogo 1: CFC vs Monobolas
+              <select name="jogo1">
+                <option value="cfc">CFC</option>
+                <option value="monobolas">Monobolas</option>
+              </select>
+            </label>
+            <canvas id="grafico-jogo1" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
-            <p class="game-title">Jogo 2: Chupiscos vs DST</p>
-            <label for="jogo2-select">Selecione o vencedor:</label>
-            <select id="jogo2-select" name="jogo2">
-              <option value="chupiscos">Chupiscos</option>
-              <option value="dst">DST</option>
-            </select>
-            <canvas id="grafico-jogo2" class="grafico-jogo" width="120" height="120"></canvas>
-          </div>
+            <label>Jogo 2: Chupiscos vs DST
+              <select name="jogo2">
+                <option value="chupiscos">Chupiscos</option>
+                <option value="dst">DST</option>
+              </select>
+            </label>
+            <canvas id="grafico-jogo2" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
-            <p class="game-title">Jogo 3: CFC vs DST</p>
-            <label for="jogo3-select">Selecione o vencedor:</label>
-            <select id="jogo3-select" name="jogo3">
-              <option value="cfc">CFC</option>
-              <option value="dst">DST</option>
-            </select>
-            <canvas id="grafico-jogo3" class="grafico-jogo" width="120" height="120"></canvas>
-          </div>
+            <label>Jogo 3: CFC vs DST
+              <select name="jogo3">
+                <option value="cfc">CFC</option>
+                <option value="dst">DST</option>
+              </select>
+            </label>
+            <canvas id="grafico-jogo3" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
-            <p class="game-title">Jogo 4: Chupiscos vs Monobolas</p>
-            <label for="jogo4-select">Selecione o vencedor:</label>
-            <select id="jogo4-select" name="jogo4">
-              <option value="chupiscos">Chupiscos</option>
-              <option value="monobolas">Monobolas</option>
-            </select>
-            <canvas id="grafico-jogo4" class="grafico-jogo" width="120" height="120"></canvas>
-          </div>
+            <label>Jogo 4: Chupiscos vs Monobolas
+              <select name="jogo4">
+                <option value="chupiscos">Chupiscos</option>
+                <option value="monobolas">Monobolas</option>
+              </select>
+            </label>
+            <canvas id="grafico-jogo4" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
-            <p class="game-title">Jogo 5: Chupiscos vs CFC</p>
-            <label for="jogo5-select">Selecione o vencedor:</label>
-            <select id="jogo5-select" name="jogo5">
-              <option value="chupiscos">Chupiscos</option>
-              <option value="cfc">CFC</option>
-            </select>
-            <canvas id="grafico-jogo5" class="grafico-jogo" width="120" height="120"></canvas>
-          </div>
+            <label>Jogo 5: Chupiscos vs CFC
+              <select name="jogo5">
+                <option value="chupiscos">Chupiscos</option>
+                <option value="cfc">CFC</option>
+              </select>
+            </label>
+            <canvas id="grafico-jogo5" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
-            <p class="game-title">Jogo 6: Monobolas vs DST</p>
-            <label for="jogo6-select">Selecione o vencedor:</label>
-            <select id="jogo6-select" name="jogo6">
-              <option value="monobolas">Monobolas</option>
-              <option value="dst">DST</option>
-            </select>
-            <canvas id="grafico-jogo6" class="grafico-jogo" width="120" height="120"></canvas>
-          </div>
+            <label>Jogo 6: Monobolas vs DST
+              <select name="jogo6">
+                <option value="monobolas">Monobolas</option>
+                <option value="dst">DST</option>
+              </select>
+            </label>
+            <canvas id="grafico-jogo6" class="grafico-jogo" width="120" height="120"></canvas>           </div>
         </div>
         <button type="submit" style="margin-top: 10px;">Confirmar Aposta Múltipla</button>
       </form>
@@ -91,16 +86,16 @@
     <div class="final">
       <h2>Quem será o Campeão da Final?</h2>
       <div class="jogo">
-        <button onclick="votarFinal(\'cfc\' )">
+        <button onclick="votarFinal('cfc')">
           <img src="cabaco.png" alt="CFC Logo" class="team-logo" />CFC
         </button>
-        <button onclick="votarFinal(\'dst\')">
+        <button onclick="votarFinal('dst')">
           <img src="estressados.png" alt="DST FC Logo" class="team-logo" />DST FC
         </button>
-        <button onclick="votarFinal(\'chupisco\')">
+        <button onclick="votarFinal('chupisco')">
           <img src="chupisco.png" alt="Chupisco FC Logo" class="team-logo" />Chupisco FC
         </button>
-        <button onclick="votarFinal(\'monobola\')">
+        <button onclick="votarFinal('monobola')">
           <img src="monobola.png" alt="Monobola RFC Logo" class="team-logo" />Monobola RFC
         </button>
       </div>
@@ -182,23 +177,25 @@
     appId: "1:916525284122:web:b03f134cdd375d3436caa3"
   };
 
-  firebase.initializeApp(firebaseConfig );
+  // ... (seu código firebaseConfig e db permanece o mesmo) ...
+
+  firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
   // Gráfico da final
-  const graficoPizza = new Chart(document.getElementById(\'graficoFinal\'), {
-    type: \'pie\',
+  const graficoPizza = new Chart(document.getElementById('graficoFinal'), {
+    type: 'pie',
     data: {
-      labels: [\'CFC\', \'DST\', \'Chupisco FC\', \'Monobola RFC\'],
+      labels: ['CFC', 'DST', 'Chupisco FC', 'Monobola RFC'],
       datasets: [{
         data: [0, 0, 0, 0],
-        backgroundColor: [\'#1f2c5c\', \'#e74c3c\', \'#7f8c8d\', \'#000000\']
+        backgroundColor: ['#1f2c5c', '#e74c3c', '#7f8c8d', '#000000']
       }]
     },
     options: {
       responsive: true,
       plugins: {
-        legend: { position: \'bottom\' }
+        legend: { position: 'bottom' }
       }
     }
   });
@@ -214,7 +211,7 @@
   }
 
   function atualizarVotos() {
-    db.ref(\'votacaoFinal\').on(\'value\', snap => {
+    db.ref('votacaoFinal').on('value', snap => {
       const d = snap.val() || {};
       document.getElementById("final-cfc").textContent = d.cfc || 0;
       document.getElementById("final-dst").textContent = d.dst || 0;
@@ -232,13 +229,13 @@
       alert("Por favor, digite seu nome antes de votar na final!");
       return;
     }
-    db.ref(\'votosFinaisPorNome/\' + nomeApostador).once(\'value\')
+    db.ref('votosFinaisPorNome/' + nomeApostador).once('value')
       .then(snapshot => {
         if (snapshot.exists()) {
           alert("Você (ou alguém com este nome) já votou na final!");
         } else {
-          db.ref(\'votosFinaisPorNome/\' + nomeApostador).set(time);
-          db.ref(\'votacaoFinal/\' + time).transaction(v => (v || 0) + 1);
+          db.ref('votosFinaisPorNome/' + nomeApostador).set(time);
+          db.ref('votacaoFinal/' + time).transaction(v => (v || 0) + 1);
           alert("Voto registrado!");
         }
       })
@@ -248,61 +245,54 @@
       });
   }
 
+
   // Gráficos dos jogos
   const graficosJogos = {};
   const nomesJogos = [
-    ["CFC", "Monobolas"],
-    ["Chupiscos", "DST"],
-    ["CFC", "DST"],
-    ["Chupiscos", "Monobolas"],
-    ["Chupiscos", "CFC"],
-    ["Monobolas", "DST"]
-  ];
-
-  const chavesJogos = [
-    ["cfc", "monobolas"],
-    ["chupiscos", "dst"],
-    ["cfc", "dst"],
-    ["chupiscos", "monobolas"],
-    ["chupiscos", "cfc"],
-    ["monobolas", "dst"]
+    ['cfc', 'monobolas'],
+    ['chupiscos', 'dst'],
+    ['cfc', 'dst'],
+    ['chupiscos', 'monobolas'],
+    ['chupiscos', 'cfc'],
+    ['monobolas', 'dst']
   ];
 
   const coresTimes = {
-    cfc: \'#007bff\',    // AZUL VIVO para CFC
-    dst: \'#2ecc71\',   // VERDE para DST
-    chupiscos: \'#7f8c8d\', // Mantém o cinza
-    monobolas: \'#e74c3c\' // VERMELHO para Monobolas
+    cfc: '#007bff',    // AZUL VIVO para CFC
+    dst: '#2ecc71',   // VERDE para DST
+    chupiscos: '#7f8c8d', // Mantém o cinza
+    monobolas: '#e74c3c' // VERMELHO para Monobolas
   };
 
-  nomesJogos.forEach((labels, i) => {
+  nomesJogos.forEach((times, i) => {
     const idCanvas = `grafico-jogo${i + 1}`;
-    const ctx = document.getElementById(idCanvas).getContext(\'2d\');
+    const ctx = document.getElementById(idCanvas).getContext('2d');
     const jogoKey = `jogo${i + 1}`;
-    const currentChaves = chavesJogos[i];
 
     graficosJogos[jogoKey] = new Chart(ctx, {
-      type: \'pie\',
+      type: 'pie',
       data: {
-        labels: labels,
+        labels: times,
         datasets: [{
           data: [0, 0],
-          backgroundColor: currentChaves.map(t => coresTimes[t])
+          backgroundColor: times.map(t => coresTimes[t])
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: false, // Mantido FALSE
+        // REMOVIDO: height: 120, // Já havíamos removido
+        // REMOVIDO: aspectRatio: 1, // Já havíamos removido
         plugins: {
-          legend: { position: \'bottom\' }
+          legend: { position: 'bottom' }
         }
       }
     });
 
-    db.ref(\'apostasMultiplas\').on(\'value\', snap => {
+    db.ref('apostasMultiplas').on('value', snap => {
       const apostas = snap.val() || {};
         let contagem = {};
-        currentChaves.forEach(team => contagem[team] = 0);
+        times.forEach(team => contagem[team] = 0);
         Object.values(apostas).forEach(ap => {
             const escolha = ap[jogoKey];
             if (contagem.hasOwnProperty(escolha)) {
@@ -310,7 +300,7 @@
             }
         });
 
-      graficosJogos[jogoKey].data.datasets[0].data = [contagem[currentChaves[0]], contagem[currentChaves[1]]];
+      graficosJogos[jogoKey].data.datasets[0].data = [contagem[times[0]], contagem[times[1]]];
       graficosJogos[jogoKey].update();
     });
   });
@@ -324,20 +314,20 @@
     const formData = new FormData(this);
     const aposta = { nome };
     formData.forEach((value, key) => {
-        if (value === \'estressados\') {
-            aposta[key] = \'dst\';
+        if (value === 'estressados') {
+            aposta[key] = 'dst';
         } else {
             aposta[key] = value;
         }
     });
 
-    db.ref(\'apostasMultiplasPorNome/\' + nome).once(\'value\')
+    db.ref('apostasMultiplasPorNome/' + nome).once('value')
       .then(snapshot => {
         if (snapshot.exists()) {
           alert("Você (ou alguém com este nome) já registrou uma aposta múltipla!");
         } else {
           db.ref("apostasMultiplas/" + Date.now()).set(aposta);
-          db.ref(\'apostasMultiplasPorNome/\' + nome).set(true);
+          db.ref('apostasMultiplasPorNome/' + nome).set(true);
           document.getElementById("resultado-multipla").innerText = `Aposta registrada para ${nome}!`;
           this.reset();
           document.getElementById("apostador").value = nome;
@@ -349,5 +339,3 @@
       });
   });
 </script>
-
-
