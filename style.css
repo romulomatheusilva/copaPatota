@@ -193,7 +193,7 @@ button:active, .btn:active {
 }
 
 /* O container que engloba todos os 6 jogos para a aposta múltipla */
-.jogos-multiplos #selecao-jogos-multiplos { /* Seletor mais específico para garantir */
+#selecao-jogos-multiplos {
     display: flex;
     flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
     justify-content: center; /* Centraliza os jogos na linha */
@@ -219,20 +219,22 @@ button:active, .btn:active {
 
 /* Estilo para os elementos canvas dos 6 jogos (Desktop) */
 .grafico-jogo {
-    /* **NOVO HACK DE PROPORÇÃO 1:1** */
-    width: 100%; /* Ocupa 100% da largura do .jogo-container (que tem max-width: 150px) */
-    padding-bottom: 100%; /* Isso faz a altura ser igual à largura (1:1 proporção) */
-    position: relative; /* Necessário para posicionar o Chart.js corretamente dentro */
-    height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
-
-    display: block;
+    /* **ATENÇÃO: Mantenha este seletor o mais simples possível para não conflitar** */
+    /* Estas propriedades são para o ELEMENTO <canvas> em si */
+    width: 120px !important;  /* Força largura do gráfico para ser quadrado no desktop */
+    height: 120px !important; /* Força altura do gráfico para ser quadrado no desktop */
+    display: block; /* Ajuda a respeitar as dimensões */
     margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
+    box-sizing: border-box; /* Garante que padding/border sejam incluídos no width/height */
+    position: relative; /* Necessário para posicionar o canvas interno */
 }
-/* O canvas em si, que é gerado pelo Chart.js DENTRO do .grafico-jogo */
+
+/* ESTE SELETOR É PARA O CONTEÚDO REAL DO CANVAS GERADO PELO CHART.JS */
+/* Ele garante que o gráfico dentro do canvas preencha o espaço corretamente */
 .grafico-jogo canvas {
-    position: absolute; /* Posiciona o canvas sobre o espaço criado pelo padding-bottom */
-    width: 100% !important; /* Força a largura */
-    height: 100% !important; /* Força a altura */
+    position: absolute; /* Posiciona o Chart.js dentro do espaço do .grafico-jogo */
+    width: 100% !important; /* Garante que o conteúdo preencha o canvas */
+    height: 100% !important; /* Garante que o conteúdo preencha o canvas */
     top: 0;
     left: 0;
 }
@@ -297,7 +299,7 @@ button:active, .btn:active {
 
 /* ========= LISTAS ========= */
 ul {
-  list-style-type: none;
+  list-style-type: none;<
   padding-left: 0;
 }
 
@@ -353,13 +355,15 @@ footer {
   .grafico-jogo {
       width: 100% !important; /* Ocupa a largura total do seu container */
       height: 200px !important; /* Altura fixa para mobile com !important */
-      padding-bottom: 0; /* Remove o padding-bottom em mobile, usamos height fixo */
+      /* No mobile, não usamos o hack de padding-bottom, então revertemos */
+      padding-bottom: 0;
   }
   .grafico-jogo canvas { /* Também para mobile */
       position: static; /* Volta ao fluxo normal, pois a altura é fixa */
       width: 100% !important;
       height: 100% !important;
   }
+
 
   #resultado-multipla {
     text-align: center;
