@@ -207,7 +207,7 @@ button:active, .btn:active {
     flex-direction: column; /* Faz o label e o gráfico ficarem um abaixo do outro */
     align-items: center; /* Centraliza o conteúdo dentro do container do jogo */
     width: 100%;
-    max-width: clamp(160px, 22vw, 240px); /* Limita a largura do contêiner para eles ficarem menores e enfileirados */
+    max-width: 150px; /* Limita a largura do contêiner para eles ficarem menores e enfileirados */
     flex-shrink: 0;
     padding: 8px;
     background-color: #2a3038;
@@ -219,8 +219,8 @@ button:active, .btn:active {
 
 /* NOVO: Wrapper para o canvas para controlar a proporção (desktop) */
 .chart-wrapper {
-    width: 100%;
-    padding-bottom: 80%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
+    width: 100%; /* Ocupa 100% da largura do .jogo-container */
+    padding-bottom: 100%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
     position: relative; /* ESSENCIAL: Para que o canvas absoluto se posicione corretamente */
     height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
     display: block; /* Para garantir que o padding-bottom funcione */
