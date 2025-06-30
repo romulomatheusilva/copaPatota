@@ -202,10 +202,8 @@ button:active, .btn:active {
 }
 
 /* Container de CADA jogo individual (label + gráfico da múltipla) */
+/* ✨✨ ESTA É A CORREÇÃO ✨✨ */
 .jogo-container {
-    display: flex;
-    flex-direction: column; /* Faz o label e o gráfico ficarem um abaixo do outro */
-    align-items: center; /* Centraliza o conteúdo dentro do container do jogo */
     width: 100%;
     max-width: 150px; /* Limita a largura do contêiner para eles ficarem menores e enfileirados */
     flex-shrink: 0;
