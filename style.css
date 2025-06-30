@@ -202,20 +202,19 @@ button:active, .btn:active {
 }
 
 /* Container de CADA jogo individual (label + gráfico da múltipla) */
-/* ✨✨ ESTA É A CORREÇÃO ✨✨ */
 .jogo-container {
     width: 100%;
-    max-width: 150px; /* Limita a largura do contêiner para eles ficarem menores e enfileirados */
+    max-width: 200px; /* <<< ALTERADO PARA 200PX */
     flex-shrink: 0;
     padding: 8px;
     background-color: #2a3038;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     box-sizing: border-box;
-    position: relative; /* Essencial para posicionar o chart-wrapper dentro */
+    position: relative;
 }
 
-/* NOVO: Wrapper para o canvas para controlar a proporção (desktop) */
+/* Wrapper para o canvas para controlar a proporção (desktop) */
 .chart-wrapper {
     width: 100%; /* Ocupa 100% da largura do .jogo-container */
     padding-bottom: 100%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
@@ -350,7 +349,7 @@ footer {
   /* Estilo para os elementos canvas dos 6 jogos (Mobile) */
   .chart-wrapper { /* O wrapper em mobile */
       width: 100%; /* Ocupa a largura total do seu container pai em mobile */
-      height: 200px; /* Altura fixa para mobile */
+      height: 150px; /* <<< ALTERADO PARA 150PX */
       padding-bottom: 0; /* Remove o padding-bottom em mobile, usamos height fixo */
       position: relative; /* Mantido para conter o canvas interno */
   }
