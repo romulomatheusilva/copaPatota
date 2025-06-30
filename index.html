@@ -13,8 +13,10 @@
     <img src="copapatota.png" alt="Logo Copa Patota" class="header-logo" />
     <h1>COPA PATOTA - Apostas</h1>
     
-    <label for="apostador">Seu nome:</label>
-    <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
+    <div class="input-group">
+      <label for="apostador">Seu nome:</label>
+      <input type="text" id="apostador" name="apostador" required placeholder="Digite seu nome" />
+    </div>
 
     <h2>Vote nos Vencedores dos Jogos</h2>
     <div class="jogos-multiplos">
@@ -87,7 +89,7 @@
             </div>
           </div>
         </div>
-        <button type="submit" style="margin-top: 10px;">Confirmar Aposta Múltipla</button>
+        <button type="submit">Confirmar Aposta Múltipla</button>
       </form>
       <div class="resultado" id="resultado-multipla">
         Nenhuma aposta múltipla registrada ainda.
@@ -289,7 +291,7 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // Mantido FALSE
+        maintainAspectRatio: false, 
         plugins: {
           legend: { position: 'bottom' }
         }
