@@ -176,6 +176,8 @@
     appId: "1:916525284122:web:b03f134cdd375d3436caa3"
   };
 
+  // ... (seu código firebaseConfig e db permanece o mesmo) ...
+
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
@@ -278,6 +280,8 @@
       options: {
         responsive: true,
         maintainAspectRatio: false, // Mantido FALSE
+        // REMOVIDO: height: 120, // Já havíamos removido
+        // REMOVIDO: aspectRatio: 1, // Já havíamos removido
         plugins: {
           legend: { position: 'bottom' }
         }
