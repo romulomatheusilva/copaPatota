@@ -5,7 +5,7 @@ body {
   background: linear-gradient(180deg, #14181c 0%, #1b1f23 100%);
   color: #ecf0f1;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Garante que não haja barra de rolagem horizontal inesperada */
   position: relative;
 }
 
@@ -32,7 +32,7 @@ body::before {
 .header-logo {
     display: block; /* Para centralizar com margin auto */
     margin: 20px auto 5px auto;
-    max-width: 100px; /* Mantido pequeno */
+    max-width: 100px;
     height: auto;
 }
 
@@ -219,22 +219,21 @@ button:active, .btn:active {
 
 /* Estilo para os elementos canvas dos 6 jogos (Desktop) */
 .grafico-jogo {
-    /* **ATENÇÃO: Mantenha este seletor o mais simples possível para não conflitar** */
-    /* Estas propriedades são para o ELEMENTO <canvas> em si */
-    width: 120px !important;  /* Força largura do gráfico para ser quadrado no desktop */
-    height: 120px !important; /* Força altura do gráfico para ser quadrado no desktop */
-    display: block; /* Ajuda a respeitar as dimensões */
-    margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
-    box-sizing: border-box; /* Garante que padding/border sejam incluídos no width/height */
-    position: relative; /* Necessário para posicionar o canvas interno */
-}
+    /* **NOVO HACK DE PROPORÇÃO 1:1 para que o canvas seja quadrado** */
+    width: 100%; /* Ocupa 100% da largura do .jogo-container (que tem max-width: 150px) */
+    padding-bottom: 100%; /* Isso faz a altura ser igual à largura (1:1 proporção) */
+    position: relative; /* Necessário para posicionar o Chart.js corretamente dentro */
+    height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
 
-/* ESTE SELETOR É PARA O CONTEÚDO REAL DO CANVAS GERADO PELO CHART.JS */
-/* Ele garante que o gráfico dentro do canvas preencha o espaço corretamente */
+    display: block; /* Garante que o box-sizing funcione bem */
+    margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
+    box-sizing: border-box; /* Inclui padding na largura/altura */
+}
+/* O canvas em si, que é gerado pelo Chart.js DENTRO do .grafico-jogo */
 .grafico-jogo canvas {
-    position: absolute; /* Posiciona o Chart.js dentro do espaço do .grafico-jogo */
-    width: 100% !important; /* Garante que o conteúdo preencha o canvas */
-    height: 100% !important; /* Garante que o conteúdo preencha o canvas */
+    position: absolute; /* Posiciona o canvas sobre o espaço criado pelo padding-bottom */
+    width: 100% !important; /* Força a largura do canvas interno */
+    height: 100% !important; /* Força a altura do canvas interno */
     top: 0;
     left: 0;
 }
@@ -299,7 +298,7 @@ button:active, .btn:active {
 
 /* ========= LISTAS ========= */
 ul {
-  list-style-type: none;<
+  list-style-type: none;
   padding-left: 0;
 }
 
@@ -355,15 +354,16 @@ footer {
   .grafico-jogo {
       width: 100% !important; /* Ocupa a largura total do seu container */
       height: 200px !important; /* Altura fixa para mobile com !important */
-      /* No mobile, não usamos o hack de padding-bottom, então revertemos */
-      padding-bottom: 0;
+      padding-bottom: 0; /* Remove o padding-bottom em mobile, usamos height fixo */
+      position: relative; /* Mantido para conter o canvas interno */
   }
   .grafico-jogo canvas { /* Também para mobile */
-      position: static; /* Volta ao fluxo normal, pois a altura é fixa */
+      position: absolute; /* Posiciona o conteúdo do Chart.js */
       width: 100% !important;
       height: 100% !important;
+      top: 0;
+      left: 0;
   }
-
 
   #resultado-multipla {
     text-align: center;
@@ -373,7 +373,7 @@ footer {
     padding: 1rem 0;
   }
 
-  /* Este seletor não existe, mas mantido caso você o adicione no futuro */
+  /* Este seletor não existe no HTML, mas é mantido por segurança */
   .jogo-grafico-container canvas {
     max-width: 100% !important;
   }
