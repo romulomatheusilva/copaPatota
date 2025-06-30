@@ -219,8 +219,8 @@ button:active, .btn:active {
 
 /* NOVO: Wrapper para o canvas para controlar a proporção (desktop) */
 .chart-wrapper {
-    width: 100%; /* Ocupa 100% da largura do .jogo-container */
-    padding-bottom: 90%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
+    width: 100%;
+    padding-bottom: 80%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
     position: relative; /* ESSENCIAL: Para que o canvas absoluto se posicione corretamente */
     height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
     display: block; /* Para garantir que o padding-bottom funcione */
