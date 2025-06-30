@@ -102,8 +102,8 @@ select {
   transition: all 0.3s ease;
   box-sizing: border-box;
   max-width: 400px; /* Limita a largura para inputs e selects */
-  margin: 10px auto; /* **NOVO: Centraliza inputs/selects** */
-  display: block; /* **NOVO: Garante que o margin auto funcione para centralizar** */
+  margin: 10px auto; /* Centraliza inputs/selects */
+  display: block; /* Garante que o margin auto funcione para centralizar */
 }
 
 input[type="text"]:focus,
@@ -214,20 +214,22 @@ button:active, .btn:active {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     box-sizing: border-box;
+    /* Adicionado para tentar conter o overflow dos gráficos se eles insistirem em ser grandes */
+    overflow: hidden;
 }
 
-/* Estilo para os elementos canvas dos 6 jogos */
+/* Estilo para os elementos canvas dos 6 jogos (Desktop) */
 .grafico-jogo {
-    min-height: 120px; /* **NOVO: Garante altura mínima para o gráfico** */
-    width: 100%; /* Permite que o gráfico preencha a largura do seu pai */
+    /* Força largura e altura com !important para PC, para que Chart.js respeite */
+    width: 120px !important;
+    height: 120px !important;
     display: block; /* Ajuda a respeitar as dimensões */
     margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
-    /* Removido: height: auto; */
-    /* Removido: max-width: 100%; */
+    /* Removido: min-height, max-width, height: auto;  - Simplificando aqui */
 }
 
 /* Seletor corrigido para hover nos gráficos dos jogos */
-.jogo-container canvas:hover { /* **CORRIGIDO: Era .jogo-grafico-container canvas:hover** */
+.jogo-container canvas:hover {
   box-shadow: 0 0 20px rgba(46,204,113,0.6);
 }
 
@@ -330,10 +332,10 @@ footer {
     width: 100%;
   }
 
-  /* Ajuste para os gráficos internos em telas pequenas */
+  /* Estilo para os elementos canvas dos 6 jogos (Mobile) */
   .grafico-jogo {
       width: 100% !important; /* Ocupa a largura total do seu container */
-      min-height: 200px !important; /* Altura fixa para mobile */
+      height: 200px !important; /* Altura fixa para mobile com !important */
   }
 
   #resultado-multipla {
