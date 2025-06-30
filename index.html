@@ -28,8 +28,7 @@
                 <option value="monobolas">Monobolas</option>
               </select>
             </label>
-            <canvas id="grafico-jogo1" class="grafico-jogo"></canvas>
-          </div>
+            <canvas id="grafico-jogo1" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
             <label>Jogo 2: Chupiscos vs DST
@@ -38,8 +37,7 @@
                 <option value="dst">DST</option>
               </select>
             </label>
-            <canvas id="grafico-jogo2" class="grafico-jogo"></canvas>
-          </div>
+            <canvas id="grafico-jogo2" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
             <label>Jogo 3: CFC vs DST
@@ -48,8 +46,7 @@
                 <option value="dst">DST</option>
               </select>
             </label>
-            <canvas id="grafico-jogo3" class="grafico-jogo"></canvas>
-          </div>
+            <canvas id="grafico-jogo3" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
             <label>Jogo 4: Chupiscos vs Monobolas
@@ -58,8 +55,7 @@
                 <option value="monobolas">Monobolas</option>
               </select>
             </label>
-            <canvas id="grafico-jogo4" class="grafico-jogo"></canvas>
-          </div>
+            <canvas id="grafico-jogo4" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
             <label>Jogo 5: Chupiscos vs CFC
@@ -68,8 +64,7 @@
                 <option value="cfc">CFC</option>
               </select>
             </label>
-            <canvas id="grafico-jogo5" class="grafico-jogo"></canvas>
-          </div>
+            <canvas id="grafico-jogo5" class="grafico-jogo" width="120" height="120"></canvas>           </div>
 
           <div class="jogo-container">
             <label>Jogo 6: Monobolas vs DST
@@ -78,8 +73,7 @@
                 <option value="dst">DST</option>
               </select>
             </label>
-            <canvas id="grafico-jogo6" class="grafico-jogo"></canvas>
-          </div>
+            <canvas id="grafico-jogo6" class="grafico-jogo" width="120" height="120"></canvas>           </div>
         </div>
         <button type="submit" style="margin-top: 10px;">Confirmar Aposta Múltipla</button>
       </form>
@@ -129,36 +123,36 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>CFC</strong></td>
-            <td>Nicolau (3)</td>
-            <td>Tururu (3), Felipe (4)</td>
-            <td>Romulo (4), Arthur (1)</td>
-            <td>15</td>
-            <td><span class="status-completo">✅ Completo</span></td>
+            <td data-label="Time"><strong>CFC</strong></td>
+            <td data-label="Ataque">Nicolau (3)</td>
+            <td data-label="Meio">Tururu (3), Felipe (4)</td>
+            <td data-label="Defesa">Romulo (4), Arthur (1)</td>
+            <td data-label="T">15</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
           </tr>
           <tr>
-            <td><strong>DST FC</strong></td>
-            <td>Julio (4)</td>
-            <td>Rodriguinho (3), Gilberto (2)</td>
-            <td>Benjamim (3), Gordo (3)</td>
-            <td>15</td>
-            <td><span class="status-completo">✅ Completo</span></td>
+            <td data-label="Time"><strong>DST FC</strong></td>
+            <td data-label="Ataque">Julio (4)</td>
+            <td data-label="Meio">Rodriguinho (3), Gilberto (2)</td>
+            <td data-label="Defesa">Benjamim (3), Gordo (3)</td>
+            <td data-label="T">15</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
           </tr>
           <tr>
-            <td><strong>MAGO FC</strong></td>
-            <td>Rafa (4)</td>
-            <td>Heitor (4), <strong>Marinho</strong> (1)</td>
-            <td>Henryco (3), Kelvys (3)</td>
-            <td>15</td>
-            <td><span class="status-completo">✅ Completo</span></td>
+            <td data-label="Time"><strong>MAGO FC</strong></td>
+            <td data-label="Ataque">Rafa (4)</td>
+            <td data-label="Meio">Heitor (4), <strong>Marinho</strong> (1)</td>
+            <td data-label="Defesa">Henryco (3), Kelvys (3)</td>
+            <td data-label="T">15</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
           </tr>
           <tr>
-            <td><strong>Monobola RFC</strong></td>
-            <td>Diego (4)</td>
-            <td>Pedro (3.5), Nicolas (1)</td>
-            <td>Salsicha (4), Luiz Paulo (2)</td>
-            <td>14.5</td>
-            <td><span class="status-completo">✅ Completo</span></td>
+            <td data-label="Time"><strong>Monobola RFC</strong></td>
+            <td data-label="Ataque">Diego (4)</td>
+            <td data-label="Meio">Pedro (3.5), Nicolas (1)</td>
+            <td data-label="Defesa">Salsicha (4), Luiz Paulo (2)</td>
+            <td data-label="T">14.5</td>
+            <td data-label="Faltam"><span class="status-completo">✅ Completo</span></td>
           </tr>
         </tbody>
       </table>
@@ -181,8 +175,6 @@
     messagingSenderId: "916525284122",
     appId: "1:916525284122:web:b03f134cdd375d3436caa3"
   };
-
-  // ... (seu código firebaseConfig e db permanece o mesmo) ...
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
@@ -265,7 +257,7 @@
   const coresTimes = {
     cfc: '#007bff',    // AZUL VIVO para CFC
     dst: '#2ecc71',   // VERDE para DST
-    chupiscos: '#ffffff', // Mantém o cinza
+    chupiscos: '#7f8c8d', // Mantém o cinza
     monobolas: '#e74c3c' // VERMELHO para Monobolas
   };
 
@@ -286,8 +278,6 @@
       options: {
         responsive: true,
         maintainAspectRatio: false, // Mantido FALSE
-        // REMOVIDO: height: 120, // **REMOVIDO: Não é um parâmetro de options válido para controlar altura fixa**
-        // REMOVIDO: aspectRatio: 1, // **REMOVIDO: Deixando o CSS com !important controlar o tamanho e proporção**
         plugins: {
           legend: { position: 'bottom' }
         }
