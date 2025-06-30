@@ -214,17 +214,19 @@ button:active, .btn:active {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     box-sizing: border-box;
-    overflow: hidden; /* Para conter o canvas caso ele transborde */
+    position: relative; /* Essencial para posicionar o chart-wrapper dentro */
 }
 
 /* NOVO: Wrapper para o canvas para controlar a proporção (desktop) */
 .chart-wrapper {
-    width: 100%; /* Ocupa a largura total do .jogo-container */
+    width: 100%; /* Ocupa 100% da largura do .jogo-container */
     padding-bottom: 100%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
-    position: relative; /* Necessário para posicionar o canvas interno */
+    position: relative; /* ESSENCIAL: Para que o canvas absoluto se posicione corretamente */
     height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
     display: block; /* Para garantir que o padding-bottom funcione */
     margin: 10px auto 0 auto; /* Centraliza o wrapper do gráfico */
+    overflow: hidden; /* Garante que o conteúdo que transborda seja oculto aqui */
+    border-radius: 50%; /* Faz o wrapper ser circular para esconder partes do gráfico */
 }
 
 /* O canvas em si, que é gerado pelo Chart.js DENTRO do .chart-wrapper */
@@ -234,12 +236,10 @@ button:active, .btn:active {
     height: 100% !important; /* Força a altura para preencher o wrapper (tornando-o quadrado) */
     top: 0;
     left: 0;
-    /* Outras propriedades de estilo do gráfico, se houver */
-    border-radius: 50%; /* Para garantir que o gráfico de pizza pareça circular dentro do espaço */
 }
 
 /* Seletor corrigido para hover nos gráficos dos jogos */
-.jogo-container canvas:hover { /* CORRIGIDO AQUI */
+.jogo-container .chart-wrapper:hover { /* Hover no wrapper agora */
   box-shadow: 0 0 20px rgba(46,204,113,0.6);
 }
 
