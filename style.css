@@ -214,22 +214,19 @@ button:active, .btn:active {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     box-sizing: border-box;
-    /* Adicionado para tentar conter o overflow dos gráficos se eles insistirem em ser grandes */
-    overflow: hidden;
+    overflow: hidden; /* Para conter o canvas caso ele transborde */
 }
 
 /* Estilo para os elementos canvas dos 6 jogos (Desktop) */
 .grafico-jogo {
-    /* Força largura e altura com !important para PC, para que Chart.js respeite */
-    width: 120px !important;
-    height: 120px !important;
+    width: 120px !important;  /* Força largura do gráfico para ser quadrada no desktop */
+    height: 120px !important; /* Força altura do gráfico para ser quadrada no desktop */
     display: block; /* Ajuda a respeitar as dimensões */
     margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
-    /* Removido: min-height, max-width, height: auto;  - Simplificando aqui */
 }
 
 /* Seletor corrigido para hover nos gráficos dos jogos */
-.jogo-container canvas:hover {
+.jogo-container canvas:hover { /* CORRIGIDO AQUI */
   box-shadow: 0 0 20px rgba(46,204,113,0.6);
 }
 
