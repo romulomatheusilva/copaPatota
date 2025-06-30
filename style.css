@@ -5,11 +5,10 @@ body {
   background: linear-gradient(180deg, #14181c 0%, #1b1f23 100%);
   color: #ecf0f1;
   line-height: 1.6;
-  overflow-x: hidden; /* Garante que não haja barra de rolagem horizontal inesperada */
+  overflow-x: hidden;
   position: relative;
 }
 
-/* Borda animada no topo da página */
 body::before {
   content: "";
   display: block;
@@ -28,15 +27,13 @@ body::before {
   100% { background-position: 300% 0%; }
 }
 
-/* Estilo para a logo da Copa Patota */
 .header-logo {
-    display: block; /* Para centralizar com margin auto */
+    display: block;
     margin: 20px auto 5px auto;
     max-width: 100px;
     height: auto;
 }
 
-/* ========= CONTAINER PRINCIPAL ========= */
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -45,10 +42,9 @@ body::before {
   border-radius: 20px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
   position: relative;
-  overflow: hidden; /* Para conter os elementos filhos */
+  overflow: hidden;
 }
 
-/* Divisor decorativo entre seções */
 .container::after {
   content: "";
   display: block;
@@ -59,7 +55,6 @@ body::before {
   border-radius: 50%;
 }
 
-/* ========= TÍTULOS ========= */
 h1, h2 {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -87,7 +82,19 @@ h2 {
   font-size: 1.8rem;
 }
 
-/* ========= INPUTS E SELECTS ========= */
+/* NOVO: Grupo de input para centralização */
+.input-group {
+  text-align: center;
+  margin: 20px auto 30px auto;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #bdc3c7;
+}
+
 input[type="text"],
 select {
   width: 100%;
@@ -101,9 +108,10 @@ select {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
   box-sizing: border-box;
-  max-width: 400px; /* Limita a largura para inputs e selects */
-  margin: 10px auto; /* Centraliza inputs/selects */
-  display: block; /* Garante que o margin auto funcione para centralizar */
+  max-width: 400px; 
+  margin-left: auto; /* Garante a centralização com o display: block */
+  margin-right: auto; /* Garante a centralização com o display: block */
+  display: block;
 }
 
 input[type="text"]:focus,
@@ -117,7 +125,6 @@ input::placeholder {
   color: #95a5a6;
 }
 
-/* ========= BOTÕES ========= */
 button, .btn {
   background: linear-gradient(135deg, #2ecc71, #27ae60);
   color: #1b1f23;
@@ -130,6 +137,7 @@ button, .btn {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
   user-select: none;
+  margin-top: 20px; /* Adiciona um espaço acima do botão */
 }
 
 button:hover, .btn:hover {
@@ -142,15 +150,15 @@ button:active, .btn:active {
   box-shadow: 0 0 6px rgba(46, 204, 113, 0.3);
 }
 
-/* ========= JOGOS (SELEÇÃO DA FINAL) ========= */
-.jogo { /* Este é o container dos botões da final */
+.jogo { 
   background-color: #2c3e50;
   border-radius: 18px;
   padding: 20px;
   margin-bottom: 24px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center; /* Alterado para center para melhor alinhamento */
+  gap: 15px; /* Adicionado para espaçamento consistente */
   align-items: center;
   transition: all 0.25s ease;
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
@@ -161,8 +169,8 @@ button:active, .btn:active {
   box-shadow: 0 0 16px rgba(46, 204, 113, 0.3);
 }
 
-.jogo label { /* Labels dentro de .jogo (apenas para a final, se houver) */
-  flex: 1 1 calc(50% - 0.75rem); /* 2 colunas no desktop */
+.jogo label {
+  flex: 1 1 calc(50% - 0.75rem);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -192,19 +200,22 @@ button:active, .btn:active {
   flex-shrink: 0;
 }
 
-/* O container que engloba todos os 6 jogos para a aposta múltipla */
+/* NOVO: Centraliza o botão dentro do formulário */
+#form-multipla {
+  text-align: center;
+}
+
 #selecao-jogos-multiplos {
     display: flex;
-    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
-    justify-content: center; /* Centraliza os jogos na linha */
-    gap: 15px; /* Espaçamento entre os containers de cada jogo */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
     margin-top: 1.5rem;
 }
 
-/* Container de CADA jogo individual (label + gráfico da múltipla) */
 .jogo-container {
     width: 100%;
-    max-width: 200px; /* <<< ALTERADO PARA 200PX */
+    max-width: 200px;
     flex-shrink: 0;
     padding: 8px;
     background-color: #2a3038;
@@ -214,33 +225,29 @@ button:active, .btn:active {
     position: relative;
 }
 
-/* Wrapper para o canvas para controlar a proporção (desktop) */
 .chart-wrapper {
-    width: 100%; /* Ocupa 100% da largura do .jogo-container */
-    padding-bottom: 100%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
-    position: relative; /* ESSENCIAL: Para que o canvas absoluto se posicione corretamente */
-    height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
-    display: block; /* Para garantir que o padding-bottom funcione */
-    margin: 10px auto 0 auto; /* Centraliza o wrapper do gráfico */
-    overflow: hidden; /* Garante que o conteúdo que transborda seja oculto aqui */
-    border-radius: 50%; /* Faz o wrapper ser circular para esconder partes do gráfico */
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    height: 0;
+    display: block;
+    margin: 10px auto 0 auto;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
-/* O canvas em si, que é gerado pelo Chart.js DENTRO do .chart-wrapper */
-.grafico-jogo { /* Este é o seu <canvas> */
-    position: absolute; /* Posiciona o canvas sobre o espaço criado pelo padding-bottom */
-    width: 100% !important; /* Força a largura para preencher o wrapper */
-    height: 100% !important; /* Força a altura para preencher o wrapper (tornando-o quadrado) */
+.grafico-jogo {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
     top: 0;
     left: 0;
 }
 
-/* Seletor corrigido para hover nos gráficos dos jogos */
-.jogo-container .chart-wrapper:hover { /* Hover no wrapper agora */
+.jogo-container .chart-wrapper:hover {
   box-shadow: 0 0 20px rgba(46,204,113,0.6);
 }
 
-/* ========= SEÇÕES E RESULTADOS ========= */
 .jogos-multiplos {
   background: #22282e;
   padding: 2rem;
@@ -265,6 +272,7 @@ button:active, .btn:active {
   z-index: 0;
 }
 
+/* ATUALIZADO: Centraliza texto nos resultados */
 .resultado, #resultado-multipla {
   background-color: #1e2a33;
   color: #ffffff;
@@ -274,6 +282,7 @@ button:active, .btn:active {
   box-shadow: 0 0 12px rgba(0,0,0,0.25);
   position: relative;
   overflow: hidden;
+  text-align: center; /* Adicionado para centralizar o texto */
 }
 
 .resultado::before,
@@ -292,7 +301,6 @@ button:active, .btn:active {
   z-index: 0;
 }
 
-/* ========= LISTAS ========= */
 ul {
   list-style-type: none;
   padding-left: 0;
@@ -303,7 +311,6 @@ li {
   font-size: 1.1rem;
 }
 
-/* ========= FOOTER ========= */
 footer {
   text-align: center;
   padding: 1rem;
@@ -312,20 +319,17 @@ footer {
   margin-top: 3rem;
 }
 
-/* ========= MÍDIAS RESPONSIVAS ========= */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
 
-  /* Ajuste para inputs/selects em telas pequenas para que ocupem toda a largura */
   input[type="text"],
   select {
-      max-width: 100%; /* Remove a limitação de 400px em mobile */
-      margin: 10px 0; /* Remove margin auto para alinhar à esquerda em mobile */
+      max-width: 100%;
+      margin: 10px 0;
   }
 
-  /* Ajuste para labels dos selects em telas pequenas */
   .jogo-container label {
     width: 100%;
     text-align: center;
@@ -334,7 +338,6 @@ footer {
     padding: 12px 14px;
   }
 
-  /* Para que os jogos se empilhem em telas menores */
   #selecao-jogos-multiplos {
     flex-direction: column;
     align-items: center;
@@ -346,15 +349,14 @@ footer {
     width: 100%;
   }
 
-  /* Estilo para os elementos canvas dos 6 jogos (Mobile) */
-  .chart-wrapper { /* O wrapper em mobile */
-      width: 100%; /* Ocupa a largura total do seu container pai em mobile */
-      height: 150px; /* <<< ALTERADO PARA 150PX */
-      padding-bottom: 0; /* Remove o padding-bottom em mobile, usamos height fixo */
-      position: relative; /* Mantido para conter o canvas interno */
+  .chart-wrapper {
+      width: 100%;
+      height: 150px;
+      padding-bottom: 0;
+      position: relative;
   }
-  .grafico-jogo { /* O canvas dentro do wrapper em mobile */
-      position: absolute; /* Posiciona o conteúdo do Chart.js */
+  .grafico-jogo {
+      position: absolute;
       width: 100% !important;
       height: 100% !important;
       top: 0;
@@ -369,23 +371,22 @@ footer {
     color: #2ecc71;
     padding: 1rem 0;
   }
-
-  /* Este seletor não existe no HTML, mas é mantido caso você o adicione no futuro */
+  
   .jogo-grafico-container canvas {
     max-width: 100% !important;
   }
 }
-/* Estilos da tabela de times */
+
 .tabela-times {
   margin: 2rem auto;
   max-width: 900px;
-  background: rgba(34, 39, 46, 0.85); /* fundo levemente translúcido */
+  background: rgba(34, 39, 46, 0.85);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
   padding: 1.5rem 1.5rem 2rem 1.5rem;
   color: #eee;
   font-family: 'Roboto', sans-serif;
-  backdrop-filter: saturate(180%) blur(10px); /* vidro fosco */
+  backdrop-filter: saturate(180%) blur(10px);
   -webkit-backdrop-filter: saturate(180%) blur(10px);
   border: 1px solid rgba(46, 204, 113, 0.3);
   transition: box-shadow 0.3s ease;
@@ -407,14 +408,14 @@ footer {
 .tabela-times table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px; /* espaçamento entre linhas */
+  border-spacing: 0 10px;
 }
 
 .tabela-times th,
 .tabela-times td {
   padding: 14px 18px;
   text-align: center;
-  border-bottom: none; /* removendo a borda padrão */
+  border-bottom: none;
   border-radius: 10px;
   font-weight: 400;
   color: #ecf0f1;
@@ -457,7 +458,6 @@ footer {
   text-shadow: 0 0 8px #27ae60;
 }
 
-/* Responsividade mantida, porém com estilos suaves */
 @media (max-width: 700px) {
   .tabela-times table,
   .tabela-times thead,
