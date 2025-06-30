@@ -293,7 +293,9 @@
         responsive: true,
         maintainAspectRatio: false, 
         plugins: {
-          legend: { position: 'bottom' }
+          legend: {
+            display: false // ✨ CORREÇÃO FINAL APLICADA AQUI ✨
+          }
         }
       }
     });
@@ -346,6 +348,7 @@
         console.error("Erro ao registrar a aposta múltipla:", error);
         alert("Ocorreu um erro ao registrar sua aposta. Tente novamente.");
       });
-  });</script>
+  });
+  </script>
 </body>
 </html>
