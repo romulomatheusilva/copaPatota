@@ -217,27 +217,26 @@ button:active, .btn:active {
     overflow: hidden; /* Para conter o canvas caso ele transborde */
 }
 
-/* Estilo para os elementos canvas dos 6 jogos (Desktop) */
-.grafico-jogo {
-    /* **NOVO HACK DE PROPORÇÃO 1:1 para que o canvas seja quadrado** */
-    width: 100%; /* Ocupa 100% da largura do .jogo-container (que tem max-width: 150px) */
-    padding-bottom: 100%; /* Isso faz a altura ser igual à largura (1:1 proporção) */
-    position: relative; /* Necessário para posicionar o Chart.js corretamente dentro */
+/* NOVO: Wrapper para o canvas para controlar a proporção (desktop) */
+.chart-wrapper {
+    width: 100%; /* Ocupa a largura total do .jogo-container */
+    padding-bottom: 100%; /* Hack para forçar a altura igual à largura (proporção 1:1) */
+    position: relative; /* Necessário para posicionar o canvas interno */
     height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
-
-    display: block; /* Garante que o box-sizing funcione bem */
-    margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
-    box-sizing: border-box; /* Inclui padding na largura/altura */
+    display: block; /* Para garantir que o padding-bottom funcione */
+    margin: 10px auto 0 auto; /* Centraliza o wrapper do gráfico */
 }
-/* O canvas em si, que é gerado pelo Chart.js DENTRO do .grafico-jogo */
-.grafico-jogo canvas {
+
+/* O canvas em si, que é gerado pelo Chart.js DENTRO do .chart-wrapper */
+.grafico-jogo { /* Este é o seu <canvas> */
     position: absolute; /* Posiciona o canvas sobre o espaço criado pelo padding-bottom */
-    width: 100% !important; /* Força a largura do canvas interno */
-    height: 100% !important; /* Força a altura do canvas interno */
+    width: 100% !important; /* Força a largura para preencher o wrapper */
+    height: 100% !important; /* Força a altura para preencher o wrapper (tornando-o quadrado) */
     top: 0;
     left: 0;
+    /* Outras propriedades de estilo do gráfico, se houver */
+    border-radius: 50%; /* Para garantir que o gráfico de pizza pareça circular dentro do espaço */
 }
-
 
 /* Seletor corrigido para hover nos gráficos dos jogos */
 .jogo-container canvas:hover { /* CORRIGIDO AQUI */
@@ -351,19 +350,20 @@ footer {
   }
 
   /* Estilo para os elementos canvas dos 6 jogos (Mobile) */
-  .grafico-jogo {
-      width: 100% !important; /* Ocupa a largura total do seu container */
-      height: 200px !important; /* Altura fixa para mobile com !important */
+  .chart-wrapper { /* O wrapper em mobile */
+      width: 100%; /* Ocupa a largura total do seu container pai em mobile */
+      height: 200px; /* Altura fixa para mobile */
       padding-bottom: 0; /* Remove o padding-bottom em mobile, usamos height fixo */
       position: relative; /* Mantido para conter o canvas interno */
   }
-  .grafico-jogo canvas { /* Também para mobile */
+  .grafico-jogo { /* O canvas dentro do wrapper em mobile */
       position: absolute; /* Posiciona o conteúdo do Chart.js */
       width: 100% !important;
       height: 100% !important;
       top: 0;
       left: 0;
   }
+
 
   #resultado-multipla {
     text-align: center;
@@ -373,7 +373,7 @@ footer {
     padding: 1rem 0;
   }
 
-  /* Este seletor não existe no HTML, mas é mantido por segurança */
+  /* Este seletor não existe no HTML, mas é mantido caso você o adicione no futuro */
   .jogo-grafico-container canvas {
     max-width: 100% !important;
   }
