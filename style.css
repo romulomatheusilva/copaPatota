@@ -193,7 +193,7 @@ button:active, .btn:active {
 }
 
 /* O container que engloba todos os 6 jogos para a aposta múltipla */
-#selecao-jogos-multiplos {
+.jogos-multiplos #selecao-jogos-multiplos { /* Seletor mais específico para garantir */
     display: flex;
     flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
     justify-content: center; /* Centraliza os jogos na linha */
@@ -219,11 +219,24 @@ button:active, .btn:active {
 
 /* Estilo para os elementos canvas dos 6 jogos (Desktop) */
 .grafico-jogo {
-    width: 120px !important;  /* Força largura do gráfico para ser quadrada no desktop */
-    height: 120px !important; /* Força altura do gráfico para ser quadrada no desktop */
-    display: block; /* Ajuda a respeitar as dimensões */
+    /* **NOVO HACK DE PROPORÇÃO 1:1** */
+    width: 100%; /* Ocupa 100% da largura do .jogo-container (que tem max-width: 150px) */
+    padding-bottom: 100%; /* Isso faz a altura ser igual à largura (1:1 proporção) */
+    position: relative; /* Necessário para posicionar o Chart.js corretamente dentro */
+    height: 0; /* Anula a altura intrínseca, permitindo padding-bottom controlar */
+
+    display: block;
     margin: 10px auto 0 auto; /* Centraliza o gráfico dentro do seu contêiner */
 }
+/* O canvas em si, que é gerado pelo Chart.js DENTRO do .grafico-jogo */
+.grafico-jogo canvas {
+    position: absolute; /* Posiciona o canvas sobre o espaço criado pelo padding-bottom */
+    width: 100% !important; /* Força a largura */
+    height: 100% !important; /* Força a altura */
+    top: 0;
+    left: 0;
+}
+
 
 /* Seletor corrigido para hover nos gráficos dos jogos */
 .jogo-container canvas:hover { /* CORRIGIDO AQUI */
@@ -308,6 +321,13 @@ footer {
     padding: 1rem;
   }
 
+  /* Ajuste para inputs/selects em telas pequenas para que ocupem toda a largura */
+  input[type="text"],
+  select {
+      max-width: 100%; /* Remove a limitação de 400px em mobile */
+      margin: 10px 0; /* Remove margin auto para alinhar à esquerda em mobile */
+  }
+
   /* Ajuste para labels dos selects em telas pequenas */
   .jogo-container label {
     width: 100%;
@@ -333,6 +353,12 @@ footer {
   .grafico-jogo {
       width: 100% !important; /* Ocupa a largura total do seu container */
       height: 200px !important; /* Altura fixa para mobile com !important */
+      padding-bottom: 0; /* Remove o padding-bottom em mobile, usamos height fixo */
+  }
+  .grafico-jogo canvas { /* Também para mobile */
+      position: static; /* Volta ao fluxo normal, pois a altura é fixa */
+      width: 100% !important;
+      height: 100% !important;
   }
 
   #resultado-multipla {
@@ -343,7 +369,8 @@ footer {
     padding: 1rem 0;
   }
 
-  .jogo-grafico-container canvas { /* Este seletor não existe, mas mantido caso você o adicione no futuro */
+  /* Este seletor não existe, mas mantido caso você o adicione no futuro */
+  .jogo-grafico-container canvas {
     max-width: 100% !important;
   }
 }
